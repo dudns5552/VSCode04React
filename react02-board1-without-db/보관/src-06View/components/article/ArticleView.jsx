@@ -1,5 +1,8 @@
 function ArticleView(props) {
   
+  // 선택한 객체를 콘솔에서 확인
+  console.log('선택한게시물 : ', props.selectRow);
+  
   return (<>
     <article>
       <table id="boardTable">
@@ -9,23 +12,24 @@ function ArticleView(props) {
         <tbody>
           <tr>
             <th>작성자</th>
-            <td>성유겸</td>
+            <td>{props.selectRow.writer}</td>
           </tr>
           <tr>
             <th>제목</th>
-            <td>오늘은 React공부하는날</td>
+            <td>{props.selectRow.title}</td>
           </tr>
           <tr>
             <th>날짜</th>
-            <td>2023-05-05</td>
+            <td>{props.selectRow.date}</td>
           </tr>
           <tr>
             <th>내용</th>
-            <td>열심히 해봅시당<br />열공합시당</td>
+            <td>{props.selectRow.contents}</td>
           </tr>
         </tbody>
       </table>
     </article>
   </>); 
 }
+
 export default ArticleView;
