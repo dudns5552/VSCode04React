@@ -162,7 +162,7 @@ function App() {
       onChangeMode = {() => {
         setMode('list');
       }}
-      onBakc = {() => {
+      onBack = {() => {
         setMode('view');
         setNo(no);
       }}></NavEdit>

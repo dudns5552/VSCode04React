@@ -1,0 +1,12 @@
+/* 전체선택자 : 웹애플리케이션 전체에 마진 5px을 적용 */
+*{
+  margin: 5px;
+}
+
+/* NavLink 컴포넌트를 통해 링크를 설정하면 클릭시 active라는 클래스가
+자동으로 추가되어 렌더링된다. */
+.active {
+  background-color: aquamarine;
+  font-weight: bold;
+  color: red;
+}
