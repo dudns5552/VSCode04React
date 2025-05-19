@@ -1,0 +1,290 @@
+{
+  "results": [
+    {
+      "gender": "female",
+      "name": {
+        "title": "Mrs",
+        "first": "Sanni",
+        "last": "Rintala"
+      },
+      "location": {
+        "street": {
+          "number": 2601,
+          "name": "Fredrikinkatu"
+        },
+        "city": "Ikaalinen",
+        "state": "Kymenlaakso",
+        "country": "Finland",
+        "postcode": 12718,
+        "coordinates": {
+          "latitude": "-27.5061",
+          "longitude": "42.9721"
+        },
+        "timezone": {
+          "offset": "-11:00",
+          "description": "Midway Island, Samoa"
+        }
+      },
+      "email": "sanni.rintala@example.com",
+      "login": {
+        "uuid": "dc904123-01c7-4c48-afff-585c7526fc1d",
+        "username": "yellowfrog566",
+        "password": "zippo",
+        "salt": "dUCWqGk0",
+        "md5": "3b2ca11abe742d3f03cd3a2046bb1a58",
+        "sha1": "4200e65f5f77b153dd5b9d460d16fef5a05bcd0e",
+        "sha256": "ed495d908d671936f6cb254350d434a8abdaec85847d7a98709b57f091100f1a"
+      },
+      "dob": {
+        "date": "1965-06-20T09:28:22.892Z",
+        "age": 59
+      },
+      "registered": {
+        "date": "2017-11-10T13:58:47.860Z",
+        "age": 7
+      },
+      "phone": "04-149-718",
+      "cell": "049-270-61-82",
+      "id": {
+        "name": "HETU",
+        "value": "NaNNA528undefined"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/44.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/44.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/44.jpg"
+      },
+      "nat": "FI"
+    },
+    {
+      "gender": "female",
+      "name": {
+        "title": "Miss",
+        "first": "Caitlin",
+        "last": "Wright"
+      },
+      "location": {
+        "street": {
+          "number": 3001,
+          "name": "Stanley Road"
+        },
+        "city": "Aberdeen",
+        "state": "Leicestershire",
+        "country": "United Kingdom",
+        "postcode": "YK6P 4ZN",
+        "coordinates": {
+          "latitude": "75.1712",
+          "longitude": "-96.6693"
+        },
+        "timezone": {
+          "offset": "-8:00",
+          "description": "Pacific Time (US & Canada)"
+        }
+      },
+      "email": "caitlin.wright@example.com",
+      "login": {
+        "uuid": "b092e483-d7f2-4f52-8c09-28b7d639f95f",
+        "username": "greenwolf510",
+        "password": "magelan",
+        "salt": "FUE1AnK0",
+        "md5": "86cb458b2de0fe63dbd4e91532ae09e5",
+        "sha1": "4d558f612332517524dda27527f4a8dbb7aca8a0",
+        "sha256": "a93d5e5d9bce42d19df7e37f8d7ddd7c23d85f655ec5c7dcebb20906fbba0da7"
+      },
+      "dob": {
+        "date": "1995-01-25T06:14:20.076Z",
+        "age": 30
+      },
+      "registered": {
+        "date": "2003-07-19T20:06:22.138Z",
+        "age": 21
+      },
+      "phone": "020 0166 9156",
+      "cell": "07100 529066",
+      "id": {
+        "name": "NINO",
+        "value": "SX 81 77 36 D"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/59.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/59.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/59.jpg"
+      },
+      "nat": "GB"
+    },
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Logan",
+        "last": "Smith"
+      },
+      "location": {
+        "street": {
+          "number": 516,
+          "name": "St. Catherine St"
+        },
+        "city": "St. Antoine",
+        "state": "Nova Scotia",
+        "country": "Canada",
+        "postcode": "T7Q 9I4",
+        "coordinates": {
+          "latitude": "-7.9318",
+          "longitude": "139.7862"
+        },
+        "timezone": {
+          "offset": "-3:00",
+          "description": "Brazil, Buenos Aires, Georgetown"
+        }
+      },
+      "email": "logan.smith@example.com",
+      "login": {
+        "uuid": "19f551bf-3528-4abe-915a-129541f90cff",
+        "username": "beautifulswan559",
+        "password": "sigmar",
+        "salt": "unZ3LI8r",
+        "md5": "3da4fe7082f2fbd7f835659df9e8f02e",
+        "sha1": "c0e1dc264db9fe49d6641b18124716cce1a1d7a3",
+        "sha256": "2a1a260c13458b6bb9ae6286b13a57ad76e49f18f9d3bfb98b62964a4ea81c91"
+      },
+      "dob": {
+        "date": "1975-08-18T03:08:45.302Z",
+        "age": 49
+      },
+      "registered": {
+        "date": "2021-09-12T08:50:38.701Z",
+        "age": 3
+      },
+      "phone": "C49 S03-9939",
+      "cell": "S84 M52-2438",
+      "id": {
+        "name": "SIN",
+        "value": "801093006"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/27.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/27.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/27.jpg"
+      },
+      "nat": "CA"
+    },
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Ryan",
+        "last": "White"
+      },
+      "location": {
+        "street": {
+          "number": 9140,
+          "name": "Stafford Street"
+        },
+        "city": "Blenheim",
+        "state": "Canterbury",
+        "country": "New Zealand",
+        "postcode": 34306,
+        "coordinates": {
+          "latitude": "40.7126",
+          "longitude": "-81.0342"
+        },
+        "timezone": {
+          "offset": "-4:00",
+          "description": "Atlantic Time (Canada), Caracas, La Paz"
+        }
+      },
+      "email": "ryan.white@example.com",
+      "login": {
+        "uuid": "e7697eca-8425-4fd2-9396-52ee1e96de45",
+        "username": "smalldog502",
+        "password": "tuscl",
+        "salt": "hM3tRzhQ",
+        "md5": "292692d6af0e98ebe478b534ed9a068b",
+        "sha1": "5842f05c120bfe908b6ed6505857e03055388c41",
+        "sha256": "6c93aaa7c44a60ed5a463f224ee3bd229fc5a944a3335bdbc77199362cbad286"
+      },
+      "dob": {
+        "date": "1999-11-02T14:50:42.099Z",
+        "age": 25
+      },
+      "registered": {
+        "date": "2013-03-03T14:49:08.931Z",
+        "age": 12
+      },
+      "phone": "(641)-100-8680",
+      "cell": "(137)-656-7065",
+      "id": {
+        "name": "",
+        "value": null
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/33.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/33.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/33.jpg"
+      },
+      "nat": "NZ"
+    },
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Jovan",
+        "last": "Bakić"
+      },
+      "location": {
+        "street": {
+          "number": 4448,
+          "name": "Vrednih Tkalja"
+        },
+        "city": "Vrnjačka Banja",
+        "state": "Rasina",
+        "country": "Serbia",
+        "postcode": 51074,
+        "coordinates": {
+          "latitude": "30.4315",
+          "longitude": "-41.1073"
+        },
+        "timezone": {
+          "offset": "-3:30",
+          "description": "Newfoundland"
+        }
+      },
+      "email": "jovan.bakic@example.com",
+      "login": {
+        "uuid": "1c175d8f-9ed7-441b-ba60-190d07d4113e",
+        "username": "yellowpeacock823",
+        "password": "bigman",
+        "salt": "cHBUmHzS",
+        "md5": "bfc1e36a3c35bc0dcc4e73c5620f7844",
+        "sha1": "c0d0c4d0032b3daf491aac49b3f3da9fbd612f73",
+        "sha256": "b9c4030b1e36c7fec913fb3c5bc3adad62cb74cd52b04e4df5ce1a3359f49911"
+      },
+      "dob": {
+        "date": "1983-01-09T22:30:00.449Z",
+        "age": 42
+      },
+      "registered": {
+        "date": "2018-02-27T18:26:05.081Z",
+        "age": 7
+      },
+      "phone": "015-5515-477",
+      "cell": "062-6446-077",
+      "id": {
+        "name": "SID",
+        "value": "653649983"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/61.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/61.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/61.jpg"
+      },
+      "nat": "RS"
+    }
+  ],
+  "info": {
+    "seed": "cf5c00f8e3413141",
+    "results": 5,
+    "page": 1,
+    "version": "1.4"
+  }
+}
