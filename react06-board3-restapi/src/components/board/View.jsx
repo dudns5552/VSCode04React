@@ -6,8 +6,10 @@ function View (props) {
   
   // 중첩된 라우팅에서 일련번호를 읽어오기 위한 훅
   let params = useParams();
-  const navigate = useNavigate();
   console.log('idx', params.idx);
+
+  // 페이지 이동을 위한 훅
+  const navigate = useNavigate();
 
   // 열람 API는 JSON 객체이므로 빈객체를 초기값으로 지정
   let [boardData, setBoardData] = useState({});
@@ -38,10 +40,15 @@ function View (props) {
     </header>
     <nav>
       <Link to="/list">목록</Link>
+
+      {/* 수정페이지로 진입시 일련번호가 필요하므로 링크를 수정한다 */}
       <Link to={"/edit/"+params.idx}>수정</Link>
+
       <Link onClick={() => {
+        // 삭제를 누르면 confirm창으로 삭제여부를 묻는다.
         if(window.confirm('삭제하시겠습니까?')) {
           console.log('삭제idx', params.idx);
+          // 삭제 API 호출
           fetch("http://nakja.co.kr/APIs/php7/boardDeleteJSON.php", {
             method: 'POST',
             headers: {
@@ -58,6 +65,7 @@ function View (props) {
           })
           .then((json) => {
             console.log(json);
+            // 삭제에 성공한 경우 알림창이 뜨고 목록으로 이동
             if(json.result === 'success'){
               alert('삭제되었습니다.');
               navigate("/list");
@@ -94,7 +102,11 @@ function View (props) {
             태그를 화면에 그대로 출력하는것이 디폴트 설정이다. */}
             {/* <td>{boardData.content}</ td> */}
             {/* 마크업이 적용된 상태로 출력된다. */}
-            <td dangerouslySetInnerHTML={{__html: boardData.content}}></td>
+            {/* 이미지가 테이블의 크기보다 큰 경우에는 450px로 맞춰서
+            출력한다. index.css에 설정되어 있다. */}
+            <td dangerouslySetInnerHTML={{__html: boardData.content}}
+              style={{'whiteSpace' : 'pre-wrap'}} 
+              className='tableImg'></td>
           </tr>
         </tbody>
       </table>

@@ -27,3 +27,8 @@ input[type=submit] { width:100px; }
 #boardTable td.subject{
     text-align: left;
 }
+
+/* 게시판 열람 페이지에 이미지가 등록되는 경우 최대 사이즈를
+450px로 지정한다. 이 경우 450px보다 작은 경우에는 원본사이즈로,
+큰 경우에는 450px로 고정된다. */
+.tableImg img{max-width: 450px;}
