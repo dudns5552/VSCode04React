@@ -6,7 +6,7 @@ import { useState } from "react";
 
 /*
 모듈화 한 컴포넌트를 임포트한다. 경로와 파일명까지만 기술하면되고
-확장자는 기술하지 않는다. */ 
+확장자는 기술하지 않아도 된다. */ 
 import ViewComponent from "./component/ViewComponent";
 import WriteComponent from "./component/WriteComponent";
 import ListComponent from "./component/ListComponent";
