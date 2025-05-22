@@ -130,7 +130,7 @@ function App() {
       <p>총학생수 : {studentInfo.count}</p>
       {/* 추가할 학생의 이름을 입력할 입력상자 */}
       <input type="text" placeholder="이름을 입력하세요" 
-        value={name} name="tt" onChange={(e) => {
+        value={name} onChange={(e) => {
           setName(e.target.value)
         }} />
       {/* 버튼을 누르면 디스패치를 통해 액션객체를 리듀서로 전달해서
@@ -142,7 +142,7 @@ function App() {
             name:name
           }
         });
-        setName('');
+        div.input.value.name.value= '';
       }}>추가</button>
       {
         // 데이터에 입력된 학생수만큼 반복해서 Student컴포넌트를 출력
