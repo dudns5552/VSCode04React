@@ -13,7 +13,7 @@ function WriteFrom(props) {
       let title = e.target.title.value;
       let contents = e.target.contents.value;
       /*
-      부모 컴포넌트에서 프롭스로 전달해준 함수를 호출하여 폼값을
+      부모 컴포넌트에서 프롭스로 전달해준 함수를 호출 하여 폼값을
       전달한다.*/ 
       props.writeAction(title,writer,contents);
     }}>
@@ -41,7 +41,7 @@ function WriteFrom(props) {
 
 function App() {
   
-  // message 라는 스에티르 생성
+  // message 라는 스테이트 생성
   const [message, setMessage] = useState('폼값 검증 진행중');
 
   return (<>
