@@ -1,5 +1,5 @@
 {
-  "name": "react14-realtime",
+  "name": "project02-json-place-holder",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,10 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "firebase": "^11.8.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.1"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

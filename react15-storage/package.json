@@ -1,5 +1,5 @@
 {
-  "name": "react14-realtime",
+  "name": "react15-storage",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,7 +13,7 @@
     "firebase": "^11.8.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.1"
+    "storage": "^0.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

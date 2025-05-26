@@ -189,13 +189,13 @@ function App() {
     titleVar = '게시판-목록(props)';
     navComp = <NavList onChangeMode={() => {
       setMode('write');
-    }}></NavList>
+    }}></NavList>;
     articleComp = <ArticleList boardData = {boardData}
       onChangeMode={(no) => {
         console.log('선택한 게시물 번호 : '+ no);
         setMode('view');
       }
-    }></ArticleList>
+    }></ArticleList>;
   }
   else if (mode === 'view') {
     titleVar = '게시판-읽기(props)';
