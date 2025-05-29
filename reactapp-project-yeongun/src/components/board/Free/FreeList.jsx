@@ -1,10 +1,11 @@
-import { getDocs, collection,} from 'firebase/firestore';
+import { getDocs, collection, } from 'firebase/firestore';
 import { firestore } from '../../../firebaseConfig';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function FreeList(props) {
-  
-  const [ listData, setListData] = useState();
+
+  const [listData, setListData] = useState();
 
 
   useEffect(() => {
@@ -15,12 +16,36 @@ function FreeList(props) {
       querySnapshot.forEach((doc) => {
         const memberInfo = doc.data();
 
+
+        // 비교군 생성
+        const dateObj = new Date();
+        const year = dateObj.getFullYear();
+        const month = ("0" + (1 + dateObj.getMonth())).slice(-2);
+        const day = ("0" + dateObj.getDate()).slice(-2);
+        const compareDate = `${year}.${month}.${day}`
+
+
+        const fullDate = memberInfo.writeDate.split('/');
+        const date = fullDate[0];
+        const hours = fullDate[1];
+
+        console.log("compareDate:", compareDate); // "2025-05-30"
+        console.log("writeDate date:", date); // fullDate[0]
+        console.log("isEqual?", compareDate === date); // true?
+        console.log("trimmed date:", date.trim());
+
+
+
         trArray.push(
-          <tr key={memberInfo.no}>
-            <td className="cen">{memberInfo.no}</td>
-            <td><Link to={'/Free/view/' + memberInfo.no}>{memberInfo.title}</Link></td>
+          <tr key={memberInfo.idx}>
+            <td className="cen">{memberInfo.idx}</td>
+            <td><Link to={'/Free/view/' + memberInfo.idx}>{memberInfo.title}</Link></td>
             <td className="cen">{memberInfo.writer}</td>
-            <td className="cen">{memberInfo.date}</td>
+            <td className="cen">{
+              (compareDate == date
+                ? hours
+                : date
+              )}</td>
           </tr>
         );
       });
@@ -56,6 +81,6 @@ function FreeList(props) {
         </tbody>
       </table>
     </article>
-  </>); 
+  </>);
 }
 export default FreeList;

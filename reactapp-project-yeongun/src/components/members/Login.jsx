@@ -5,18 +5,18 @@ import { firestore } from "../../firebaseConfig";
 import StatesContext from "../../commons/StatesContext";
 
 function Login(props) {
-  
+
   const [id, setId] = useState('');
   const [pass, setPass] = useState('');
   const navigate = useNavigate();
 
   const [showData, setShowData] = useState([]);
 
-  const {rendering, setRendering} = useContext(StatesContext);
+  const { rendering, setRendering } = useContext(StatesContext);
 
   // 데이터 불러오기
   const getCollection = async () => {
-    
+
     let trArray = [];
 
     // 컬렉션명으로 하위 도큐먼트를 읽어온다.
@@ -24,17 +24,17 @@ function Login(props) {
 
     // 배열로 얻어온 도큐먼트의 갯수만큼 반복
     querySnapshot.forEach((doc) => {
-      
+
       // console.log(doc.id, '=>', doc.data());
       /* 
       콜백된 객체(doc)를 기반으로 data()함수를 호출하여 실제데이터 얻기
-      */ 
+      */
       let memberInfo = doc.data();
       // console.log('파싱', doc.id, memberInfo.pass, memberInfo.name,
       //   memberInfo.regdate);
 
       // tr태그로 출력할 항목 구성
-      trArray.push ({
+      trArray.push({
         id: memberInfo.id,
         pass: memberInfo.pass,
         name: memberInfo.name
@@ -48,13 +48,20 @@ function Login(props) {
     getCollection();
   }, [])
 
-  function loginCheck () {
-    for(let i = 0 ; i < showData.length ; i++){
-      if(id === showData[i].id && pass === showData[i].pass){
-        sessionStorage.setItem('islogined', JSON.stringify({id: id, name: showData[i].name }));
+  function loginCheck() {
+    let ok = false;
+    for (let i = 0; i < showData.length; i++) {
+      if (id === showData[i].id && pass === showData[i].pass) {
+        sessionStorage.setItem('islogined', JSON.stringify({ id: id, name: showData[i].name }));
         setRendering(!rendering);
         navigate('/');
+        ok = true;
+        break;
       }
+    }
+    if (!ok) {
+      alert('아이디나 비밀번호가 틀립니다.');
+      setPass('');
     }
   }
 
@@ -67,13 +74,13 @@ function Login(props) {
       }}>
         <div className="login-field">
           <label htmlFor="username">아이디</label>
-          <input type="text" id="username" name="username" required 
-            onChange={(e)=>{setId(e.target.value)}} value={id}/>
+          <input type="text" id="username" name="username" required
+            onChange={(e) => { setId(e.target.value) }} value={id} />
         </div>
         <div className="login-field">
           <label htmlFor="password">패스워드</label>
-          <input type="password" id="password" name="password" required 
-            onChange={(e)=>{setPass(e.target.value)}} value={pass}/>
+          <input type="password" id="password" name="password" required
+            onChange={(e) => { setPass(e.target.value) }} value={pass} />
         </div>
         <div className="login-button-wrapper">
           <button type="submit" className="login-button">로그인</button>
@@ -85,6 +92,6 @@ function Login(props) {
         </div>
       </form>
     </div>
-  </>); 
+  </>);
 }
 export default Login;

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import TopNavi from './components/TopNavi';
 import MemberRoutes  from './routes/MemberRoutes';
+import BoardRoutes from './routes/BoardRoutes';
 
 import { StatesProvider }  from './commons/StatesContext';
 
@@ -17,6 +18,7 @@ function App(props) {
       <Routes>
         <Route path='/' element={<Home />} />
         {MemberRoutes()}
+        {BoardRoutes()}
       </Routes>
     </StatesProvider>
   </>); 
