@@ -6,7 +6,6 @@ import TopNavi from './components/TopNavi';
 import Login from './components/members/Login';
 import IdCheck from './components/members/IdCheck';
 import Modify from './components/members/Modify';
-import Context from './commons/Context';
 
 
 
@@ -14,7 +13,6 @@ import Context from './commons/Context';
 function App(props) {
   
   return (<>
-    <Context.Provider value>
     <TopNavi />
     <Routes>
       <Route path='/' element={<Home />} />
@@ -23,7 +21,6 @@ function App(props) {
       <Route path='/login' element={<Login />} />
       <Route path='/modify' element={<Modify />} />
     </Routes>
-    </Context.Provider>
   </>); 
 }
 export default App;

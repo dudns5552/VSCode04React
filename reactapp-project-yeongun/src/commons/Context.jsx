@@ -1,4 +1,4 @@
 import { createContext} from "react";
 
 
-export const { isLogin } = createContext(false);
+export const Context = createContext(false);
