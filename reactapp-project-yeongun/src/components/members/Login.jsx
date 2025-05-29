@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { getDocs, collection } from 'firebase/firestore';
 import { firestore } from "../../firebaseConfig";
+import StatesContext from "../../commons/StatesContext";
 
 function Login(props) {
   
@@ -10,6 +11,8 @@ function Login(props) {
   const navigate = useNavigate();
 
   const [showData, setShowData] = useState([]);
+
+  const {rendering, setRendering} = useContext(StatesContext);
 
   // 데이터 불러오기
   const getCollection = async () => {
@@ -33,7 +36,8 @@ function Login(props) {
       // tr태그로 출력할 항목 구성
       trArray.push ({
         id: memberInfo.id,
-        pass: memberInfo.pass
+        pass: memberInfo.pass,
+        name: memberInfo.name
       });
     });
     // 파싱된 데이터를 통해 스테이트 변경 및 리렌더링
@@ -47,7 +51,8 @@ function Login(props) {
   function loginCheck () {
     for(let i = 0 ; i < showData.length ; i++){
       if(id === showData[i].id && pass === showData[i].pass){
-        sessionStorage.setItem(id, pass);
+        sessionStorage.setItem('islogined', JSON.stringify({id: id, name: showData[i].name }));
+        setRendering(!rendering);
         navigate('/');
       }
     }
