@@ -1,52 +1,90 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { firestore } from '../../firebaseConfig';
-import { useNavigate } from 'react-router-dom'; // ✅ 수정
-import { setDoc, doc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import { setDoc, doc, collection, query, where, getDocs } from 'firebase/firestore'; // 추가됨
 
 function Signup(props) {
-  const navigate = useNavigate(); // ✅ 수정
-  const [collName, setCollName] = useState('members');
-  const [username, setUserName] = useState('');
+  const navigate = useNavigate();
+
+  const [collName] = useState('members');
   const [isLocked, setIsLocked] = useState(false);
-  const [sDomain, setSDomain] = useState('');
-  const [str1, setStr1] = useState('');
-  const [str2, setStr2] = useState('');
   const [domainLock, setDomainLock] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [ idChecked, setIdChecked ] = useState(false);
+
+  const [formData, setFormData] = useState({
+    id: '',
+    pass: '',
+    name: '',
+    emailId: '',
+    sDomain: '',
+    p1: '',
+    p2: '',
+    p3: '',
+    zipcode: '',
+    address1: '',
+    address2: ''
+  });
 
   const nowDate = () => {
     let dateObj = new Date();
-    var year = dateObj.getFullYear();
-    var month = ("0" + (1 + dateObj.getMonth())).slice(-2);
-    var day = ("0" + dateObj.getDate()).slice(-2);
-    return year + '-' + month + '-' + day;
+    let year = dateObj.getFullYear();
+    let month = ("0" + (1 + dateObj.getMonth())).slice(-2);
+    let day = ("0" + dateObj.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
   };
 
-  const memberWrite = async (p_collection, p_id, p_pass, p_name, f_email, f_phone, f_add) => {
+  const memberWrite = async (
+    p_collection, p_id, p_pass, p_name,
+    emailId, emailDomain,
+    p1, p2, p3,
+    zipcode, address1, address2
+  ) => {
     await setDoc(doc(firestore, p_collection, p_id), {
       id: p_id,
       pass: p_pass,
       name: p_name,
-      email: f_email,
-      phone: f_phone,
-      add: f_add,
+      email: { id: emailId, domain: emailDomain },
+      phone: { p1, p2, p3 },
+      add: { zipcode, address: address1, detail: address2 },
       regdate: nowDate(),
     });
     console.log('입력성공');
   };
 
-  function idCheck() {
-    if (!username) {
-      alert("아이디를 입력후 중복확인을 누르삼");
+  // 중복확인 함수 (Firebase에서 직접 검사) // 추가됨
+  const idCheck = async () => {
+    if (!formData.id) {
+      alert("아이디를 입력 후 중복확인을 눌러주세요");
       return;
     }
-    window.open(`./idCheck?id=${username}`, "idover", "width=400, height=400");
-  }
+
+    try {
+      const q = query(collection(firestore, collName), where("id", "==", formData.id));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        alert("중복된 아이디입니다.");
+        setIdChecked(false);
+        setIsLocked(false);
+      } else {
+        alert("사용 가능한 아이디입니다.");
+        setIdChecked(true);
+        setIsLocked(true);
+      }
+    }
+    catch (error) {
+      console.error("아이디 중복확인 중 오류 발생:", error);
+      alert("중복확인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      setIdChecked(false);
+      setIsLocked(false);
+    }
+  };
 
   const searchAdd = () => {
     new window.daum.Postcode({
       oncomplete: function (data) {
-        document.getElementById("zipcode").value = data.zonecode;
-        document.getElementById("address").value = data.address;
+        setFormData(prev => ({ ...prev, zipcode: data.zonecode, address1: data.address }));
       },
     }).open();
   };
@@ -57,88 +95,82 @@ function Signup(props) {
       <form className="signup-form" onSubmit={async (event) => {
         event.preventDefault();
 
-        let collection = event.target.collection.value;
-        let username = event.target.username.value;
-        let pass = event.target.password.value;
-        let confirmPassword = event.target.confirmPassword.value;
-        let name = event.target.name.value;
-        let emailId = event.target.emailId.value;
-        let emailDomain = event.target.emailDomain.value;
-        let p1 = event.target.p1.value;
-        let p2 = event.target.p2.value;
-        let p3 = event.target.p3.value;
-        let zipcode = event.target.zipcode.value;
-        let address1 = event.target.address.value;
-        let address2 = event.target.addressDetail.value;
+        const {
+          id, pass, name,
+          emailId, sDomain, p1, p2, p3,
+          zipcode, address1, address2
+        } = formData;
 
-        if (username === '') { alert('아이디를 입력하세요'); return; }
+        if (id === '') { alert('아이디를 입력하세요'); return; }
         if (pass === '') { alert('비밀번호를 입력하세요'); return; }
         if (pass !== confirmPassword) { alert('비밀번호가 같지 않습니다.'); return; }
         if (name === '') { alert('이름을 입력하세요'); return; }
         if (emailId === '') { alert('이메일을 입력하세요'); return; }
-        if (emailDomain === '') { alert('도메인을 입력하세요'); return; }
-        if (p1 === '') { alert('전화번호를 입력하세요'); return; }
-        if (p2 === '') { alert('전화번호를 입력하세요'); return; }
-        if (p3 === '') { alert('전화번호를 입력하세요'); return; }
-        if (zipcode === '') { alert('주소를 입력하세요'); return; }
-        if (address1 === '') { alert('주소를 입력하세요'); return; }
-        if (address2 === '') { alert('주소를 입력하세요'); return; }
+        if (sDomain === '') { alert('도메인을 입력하세요'); return; }
+        if (p1 === '' || p2 === '' || p3 === '') { alert('전화번호를 입력하세요'); return; }
+        if (zipcode === '' || address1 === '' || address2 === '') { alert('주소를 입력하세요'); return; }
+        if (!idChecked) { alert('중복확인을 해주세요'); return; }
 
-        let fullEmail = emailId + '@' + emailDomain;
-        let fullPhone = p1 + '-' + p2 + '-' + p3;
-        let fullAddress = `(${zipcode}) ${address1} ${address2}`;
-
-        await memberWrite(collection, username, pass, name, fullEmail, fullPhone, fullAddress);
-        navigate("/"); // ✅ 수정
+        await memberWrite(collName, id, pass, name, emailId, sDomain, p1, p2, p3, zipcode, address1, address2);
+        setIdChecked(false); // 다음 회원가입 시 중복확인을 위해 상태 초기화
+        setIsLocked(false);  // 잠금 해제 (선택사항)
+        alert("회원가입이 완료되었습니다.");
+        navigate("/");
       }}>
-        <input type="hidden" name='collection'
-          value={collName} onChange={(e) => setCollName(e.target.value)} />
+        <input type="hidden" name='collection' value={collName} />
 
         <table className="signup-table">
           <tbody>
             <tr>
-              <th><label htmlFor="username">아이디</label></th>
+              <th><label htmlFor="id">아이디</label></th>
               <td>
                 <div className="signup-inline">
-                  <input type="text" id="username" name="username" required
-                    onChange={(e) => { setUserName(e.target.value) }} readOnly={isLocked} />
-                  <button type="button" className="signup-inline-button"
-                    onClick={() => { idCheck() }}>중복확인</button>
+                  <input type="text" id="id" name="id" required
+                    value={formData.id}
+                    onChange={(e) => {
+                      setFormData({ ...formData, id: e.target.value });
+                      setIdChecked(false);      // 아이디 입력 변경 시 중복확인 다시 해야 하므로 false로 변경 // 추가됨
+                      setIsLocked(false);       // 입력 변경되면 잠금 해제 // 추가됨
+                    }}
+                    readOnly={isLocked} />
+                  <button type="button" className="signup-inline-button" onClick={idCheck}>중복확인</button>
                 </div>
               </td>
             </tr>
 
             <tr>
               <th><label htmlFor="password">패스워드</label></th>
-              <td>
-                <input type="password" id="password" name="password" required className="signup-input" />
-              </td>
+              <td><input type="password" id="password" name="password" required className="signup-input"
+                value={formData.pass}
+                onChange={(e) => setFormData({ ...formData, pass: e.target.value })} /></td>
             </tr>
 
             <tr>
               <th><label htmlFor="confirmPassword">패스워드 확인</label></th>
-              <td>
-                <input type="password" id="confirmPassword" name="confirmPassword" required className="signup-input" />
-              </td>
+              <td><input type="password" id="confirmPassword" name="confirmPassword" required className="signup-input"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)} /></td>
             </tr>
 
             <tr>
               <th><label htmlFor="name">이름</label></th>
-              <td>
-                <input type="text" id="name" name="name" required className="signup-input" />
-              </td>
+              <td><input type="text" id="name" name="name" required className="signup-input"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></td>
             </tr>
 
             <tr>
               <th><label htmlFor="email">이메일</label></th>
               <td>
                 <div className="signup-email-row">
-                  <input type="text" name="emailId" required />
+                  <input type="text" name="emailId" required
+                    value={formData.emailId}
+                    onChange={(e) => setFormData({ ...formData, emailId: e.target.value })} />
                   <span>@</span>
-                  <input type="text" name="emailDomain" required value={sDomain} onChange={
-                    (e) => { setSDomain(e.target.value) }} readOnly={domainLock} />
+                  <input type="text" name="emailDomain" required value={formData.sDomain}
+                    onChange={(e) => setFormData({ ...formData, sDomain: e.target.value })} readOnly={domainLock} />
                   <select className="signup-email-select" onChange={(e) => {
-                    setSDomain(e.target.value);
+                    setFormData({ ...formData, sDomain: e.target.value });
                     setDomainLock(!!e.target.value);
                   }}>
                     <option value="">직접입력</option>
@@ -155,23 +187,24 @@ function Signup(props) {
               <th><label htmlFor="phone">휴대전화번호</label></th>
               <td>
                 <div className="signup-phone-row">
-                  <input type="text" maxLength="3" required name='p1' id='p1' value={str1}
+                  <input type="text" maxLength="3" required name='p1' id='p1' value={formData.p1}
                     onChange={(e) => {
-                      setStr1(e.target.value)
+                      setFormData({ ...formData, p1: e.target.value });
                       if (e.target.value.length === 3) {
-                        document.getElementById('p2').focus()
+                        document.getElementById('p2').focus();
                       }
                     }} />
-                    -
-                  <input type="text" maxLength="4" required name='p2' id='p2' value={str2}
+                  -
+                  <input type="text" maxLength="4" required name='p2' id='p2' value={formData.p2}
                     onChange={(e) => {
-                      setStr2(e.target.value)
+                      setFormData({ ...formData, p2: e.target.value });
                       if (e.target.value.length === 4) {
-                        document.getElementById('p3').focus()
+                        document.getElementById('p3').focus();
                       }
                     }} />
-                    -
-                  <input type="text" maxLength="4" required name='p3' id='p3' />
+                  -
+                  <input type="text" maxLength="4" required name='p3' id='p3' value={formData.p3}
+                    onChange={(e) => setFormData({ ...formData, p3: e.target.value })} />
                 </div>
               </td>
             </tr>
@@ -180,11 +213,15 @@ function Signup(props) {
               <th><label htmlFor="zipcode">주소</label></th>
               <td>
                 <div className="signup-inline">
-                  <input type="text" id="zipcode" name="zipcode" className="signup-zipcode" readOnly required />
+                  <input type="text" id="zipcode" name="zipcode" className="signup-zipcode" readOnly required
+                    value={formData.zipcode} />
                   <button type="button" className="signup-inline-button" onClick={searchAdd}>주소찾기</button>
                 </div>
-                <input type="text" id='address' name="address" placeholder="기본주소" readOnly className="signup-mt8" />
-                <input type="text" id='addressDetail' name="addressDetail" placeholder="상세주소" className="signup-mt8" />
+                <input type="text" id='address' name="address" placeholder="기본주소" readOnly className="signup-mt8"
+                  value={formData.address1} />
+                <input type="text" id='addressDetail' name="addressDetail" placeholder="상세주소" className="signup-mt8"
+                  value={formData.address2}
+                  onChange={(e) => setFormData({ ...formData, address2: e.target.value })} />
               </td>
             </tr>
           </tbody>

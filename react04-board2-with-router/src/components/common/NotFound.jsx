@@ -1,13 +1,7 @@
-import {Link} from 'react-router-dom';
-
-function NotFound () {
+function NotFound(props) {
   return (<>
-    <div>
-      <h2>Not Found</h2>
-      <p>
-        페이지를 찾을 수 없습니다.
-      </p>
-    </div>
-  </>);
+    <h2>404 Not Found</h2>
+    <p>페이지를 찾을 수 없습니다.<br/></p>
+  </>); 
 }
-export default NotFound
+export default NotFound;
