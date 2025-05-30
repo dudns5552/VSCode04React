@@ -1,18 +1,16 @@
 import { Route } from 'react-router-dom';
 import FreeList from '../components/board/Free/FreeList';
 import FreeWrite from '../components/board/Free/FreeWrite';
+import FreeView from '../components/board/Free/FreeView';
+import FreeEdit from '../components/board/Free/FreeEdit';
 
 function BoardRoutes(props) {
 
   return (<>
-    <Route path='/Free/Write' element={<FreeWrite />} />
-    <Route path='/Free/List' element={<FreeList />} >
-      {/* <Route path=':page' element={<FreeList />} /> */}
-    </Route>
-    {/* <Route path='/Free/view' >
-      <Route path=':idx' element={<FreeView />} />
-    </Route>
-    <Route path='/Free/Edit' element={<FreeEdit />} /> */}
+    <Route path='/free/write' element={<FreeWrite />} />
+    <Route path='/free/list/:page?' element={<FreeList />} />
+    <Route path='/free/view/:idx' element={<FreeView />} />
+    <Route path='/free/edit/:idx' element={<FreeEdit />} />
   </>);
 }
 export default BoardRoutes;

@@ -23,7 +23,7 @@ function FreeWrite() {
     const sec = ("0" + dateObj.getSeconds()).slice(-2);
     const milSec = dateObj.getMilliseconds();
 
-    return `${year}.${month}.${day}/${hour}:${mi}/${sec}:${milSec}`;
+    return `${year}.${month}.${day}/${hour}:${mi}` // ${sec}:${milSec};
   };
 
   // 인덱스 자동 증가
