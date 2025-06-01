@@ -10,8 +10,6 @@ import { useRef } from 'react';
 // Router에서 제공하는 Hooks
 import { useSearchParams } from 'react-router-dom';
 
-// css파일을 추가하는 경우 src하위에 생성한 후 import해서 적용한다.
-import '../Chat.css';
 
 // 스크롤바를 최하단으로 내려주기 위한 JS함수
 const scrollTop = (chatWindow) => {
@@ -21,7 +19,7 @@ const scrollTop = (chatWindow) => {
 
 // 컴포넌트 정의
 function ChatMessage() {
-
+  
   // 쿼리스트링으로 전달된 파라미터를 조작할때 사용하는 라우터 훅
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -36,7 +34,7 @@ function ChatMessage() {
   const [chatData, setChatData] = useState('');
 
   // 리얼타임에 대화내역 저장
-  function messageWrite(chatRoom, chatId, ChatMessage) {
+  function messageWrite (chatRoom, chatId, ChatMessage) {
 
     // 고유키 생성. 데이터 저장시 중복되지 않는 일련번호와 같이 사용된다.
     const newPostKey = push(child(ref(realtime), 'tempValue')).key;
@@ -82,14 +80,14 @@ function ChatMessage() {
         // console.log('리스너', childKey, childData.id, userId);
 
         // 대화내용은 종류에 따라 좌/우측으로 정렬
-        if (childData.id === userId) {
+        if(childData.id === userId){
           /* 데이터베이스에 등록된 데이터의 아이디와 대화창에 접속한
           사용자의 아이디가 일치하면, 본인이므로 대화내용을 '우측'으로
           정렬한다. */
           showDiv.push(<div className='myMsg'
-            style={{ 'textAlign': 'right' }}>{childData.message}</div>);
+            style={{'textAlign' : 'right'}}>{childData.message}</div>);
         }
-        else {
+        else{
           // 상대방이 보낸 메세지는 좌측으로 정렬한다.
           showDiv.push(<div>{childData.message}</div>);
         }
@@ -106,7 +104,7 @@ function ChatMessage() {
       <h2>Realtime 채팅</h2>
       대화명 : {userId} &nbsp;&nbsp;
       {/* X버튼을 누르는 것과 같이 창을 닫는다. */}
-      <button id='closeBtn' onClick={() => { window.self.close(); }}>
+      <button id='closeBtn' onClick={() => {window.self.close();}}>
         채팅종료
       </button>
       {/* 채팅 내역이 출력되는 부분으로 ref를 사용한다. */}
@@ -120,15 +118,15 @@ function ChatMessage() {
           let chatRoom = e.target.chatRoom.value;
           let chatId = e.target.chatId.value;
           // 빈값 검증
-          if (chatId === '') {
+          if(chatId === '') {
             alert('대화명을 입력하세요');
             return;
           }
-
+          
           // 입력한 메세지 얻어오기
           let message = e.target.message.value;
 
-          if (message === '') {
+          if(message === ''){
             alert('메세지를 입력하세요');
             return;
           }

@@ -3,36 +3,36 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { firestore } from "../../../firebaseConfig";
 
-function FreeEdit() {
+function QnAEdit() {
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
   const { idx } = useParams();
   const viewIdx = Number(idx);
 
-  const [snapshot, setSnapshot] = useState(null); // 💡 updateDoc에서 사용할 문서 참조 저장
+  const [snapshot, setSnapshot] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getView = async () => {
       try {
         const q = query(
-          collection(firestore, 'freeBoard'),
+          collection(firestore, 'qnaBoard'),
           where('idx', '==', viewIdx)
         );
 
-        const querySnapshot = await getDocs(q); // ✅ getDocs의 결과를 지역 변수에 저장
+        const querySnapshot = await getDocs(q); //
 
-        if (querySnapshot.empty) { // ✅ .empty를 사용해 게시글 존재 여부 확인
+        if (querySnapshot.empty) { 
           alert('존재하지 않는 게시글입니다.');
-          navigate('/free/list');
+          navigate('/qna/list');
           return;
         }
 
-        const doc = querySnapshot.docs[0]; // ✅ 첫 번째 문서 선택
+        const doc = querySnapshot.docs[0];
         const data = doc.data();
 
-        setSnapshot(doc.ref); // ✅ 문서 참조(doc.ref)를 상태로 저장하여 updateDoc에 사용
-        setTitle(data.title); // ✅ 상태 직접 설정 (currentPost 생략 가능)
+        setSnapshot(doc.ref); 
+        setTitle(data.title); 
         setContents(data.contents);
       } catch (error) {
         console.error('게시글 불러오기 실패:', error);
@@ -42,7 +42,7 @@ function FreeEdit() {
     getView();
   }, [viewIdx, navigate]);
 
-  const Edit = async () => {
+  const edit = async () => {
     try {
       if (!snapshot) {
         alert("문서 참조가 없습니다.");
@@ -55,7 +55,7 @@ function FreeEdit() {
       }); // ✅ 문서 참조를 이용해 updateDoc 수행
 
       console.log('입력 성공');
-      navigate('/free/list');
+      navigate('/qna/list');
     } catch (err) {
       console.error("수정 실패:", err);
     }
@@ -64,16 +64,16 @@ function FreeEdit() {
   return (
     <>
       <header>
-        <h2>자유게시판 - 수정</h2>
+        <h2>Q&A게시판 - 수정</h2>
       </header>
       <nav>
-        <Link to="/free/list">목록</Link>
+        <Link to="/qna/list">목록</Link>
       </nav>
       <article>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            Edit();
+            edit();
           }}
         >
           <input type="hidden" name="collection" value="freeBoard" />
@@ -115,4 +115,4 @@ function FreeEdit() {
   );
 }
 
-export default FreeEdit;
+export default QnAEdit;

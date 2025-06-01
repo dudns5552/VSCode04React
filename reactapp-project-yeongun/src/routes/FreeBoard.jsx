@@ -4,7 +4,7 @@ import FreeWrite from '../components/board/Free/FreeWrite';
 import FreeView from '../components/board/Free/FreeView';
 import FreeEdit from '../components/board/Free/FreeEdit';
 
-function BoardRoutes(props) {
+function FreeBoard(props) {
 
   return (<>
     <Route path='/free/write' element={<FreeWrite />} />
@@ -13,4 +13,4 @@ function BoardRoutes(props) {
     <Route path='/free/edit/:idx' element={<FreeEdit />} />
   </>);
 }
-export default BoardRoutes;
+export default FreeBoard;

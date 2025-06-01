@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { firestore } from "../../../firebaseConfig";
 
-function FreeWrite() {
+function QnAWrite() {
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
 
@@ -28,7 +28,7 @@ function FreeWrite() {
 
   // 인덱스 자동 증가
   const getNewIdx = async () => {
-    const idxRef = collection(firestore, 'freeBoard');
+    const idxRef = collection(firestore, 'qnaBoard');
     const q = query(idxRef, orderBy('idx', 'desc'), limit(1));
     const querySnapshot = await getDocs(q);
 
@@ -44,16 +44,16 @@ function FreeWrite() {
   const write = async (collectionName, data) => {
     await addDoc(collection(firestore, collectionName), data);
     console.log('입력 성공');
-    navigate('/free/list'); // 작성 후 목록으로 이동
+    navigate('/qna/list'); // 작성 후 목록으로 이동
   };
 
   return (
     <>
       <header>
-        <h2>자유게시판 - 작성</h2>
+        <h2>Q&A게시판 - 작성</h2>
       </header>
       <nav>
-        <Link to="/free/list">목록</Link>
+        <Link to="/qna/list">목록</Link>
       </nav>
       <article>
         <form
@@ -84,7 +84,7 @@ function FreeWrite() {
             await write(collectionName, newData);
           }}
         >
-          <input type="hidden" name="collection" value="freeBoard" />
+          <input type="hidden" name="collection" value="qnaBoard" />
 
           <table id="boardTable">
             <colgroup>
@@ -125,4 +125,4 @@ function FreeWrite() {
   );
 }
 
-export default FreeWrite;
+export default QnAWrite;

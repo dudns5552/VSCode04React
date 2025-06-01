@@ -113,85 +113,85 @@ function CommentList(props) {
               }>좋아요 ({curr.likes})</button>
               <button className="btn btn-outline-warning btn-sm" data-bs-target="#commentModal"
                 onClick={() => {
-                  
-                  return(
-                  <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true" >
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <form onSubmit={(event) => {
-                          // 제출되는 것을 차단
-                          event.preventDefault()
-                          let newArr = [];
-                          for(let i = 0; i< props.bData.length; i++){
-                            if(curr.no !== props.bData.no){
-                              newArr.push(props.bData[i]);
+
+                  return (
+                    <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true" >
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                          <form onSubmit={(event) => {
+                            // 제출되는 것을 차단
+                            event.preventDefault()
+                            let newArr = [];
+                            for (let i = 0; i < props.bData.length; i++) {
+                              if (curr.no !== props.bData.no) {
+                                newArr.push(props.bData[i]);
+                              }
+                              else (newArr.push({ no: curr.no, writer: props.writer, date: curr.date, text: props.text }))
                             }
-                            else(newArr.push({no: curr.no, writer: props.writer, date: curr.date, text: props.text}))
-                          }
-                          props.setBData(newArr);
+                            props.setBData(newArr);
                           }}>
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="commentModalLabel">댓글 작성</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div className="modal-body">
-                            {/*  작성자명 입력 상자 추가  */}
-                            <div className="mb-3">
-                              <label htmlFor="commentAuthor" className="form-label">작성자명</label>
-                              <input type="text" className="form-control" id="commentAuthor"
-                                name="writer" value={curr.writer}
-                                onChange={(event) => {
-                                  // 스테이트 변경을 위한 함수를 호출한다.
-                                  props.setWriter(event.target.value);
-                                }} />
+                            <div className="modal-header">
+                              <h5 className="modal-title" id="commentModalLabel">댓글 작성</h5>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            {/*  댓글 입력 상자  */}
-                            <label htmlFor="commentContent" className="form-label">댓글 내용</label>
-                            <textarea className="form-control" id="commentContent" rows="3"
-                              name="text" value={curr.text}
-                              onChange={(event) => {
-                                props.setText(event.target.value);
-                              }} ></textarea>
-                          </div>
-                          <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                            <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >작성</button>
-                          </div>
-                        </form>
-                    </div>
-                  </div>
-                  </div>);
+                            <div className="modal-body">
+                              {/*  작성자명 입력 상자 추가  */}
+                              <div className="mb-3">
+                                <label htmlFor="commentAuthor" className="form-label">작성자명</label>
+                                <input type="text" className="form-control" id="commentAuthor"
+                                  name="writer" value={curr.writer}
+                                  onChange={(event) => {
+                                    // 스테이트 변경을 위한 함수를 호출한다.
+                                    props.setWriter(event.target.value);
+                                  }} />
+                              </div>
+                              {/*  댓글 입력 상자  */}
+                              <label htmlFor="commentContent" className="form-label">댓글 내용</label>
+                              <textarea className="form-control" id="commentContent" rows="3"
+                                name="text" value={curr.text}
+                                onChange={(event) => {
+                                  props.setText(event.target.value);
+                                }} ></textarea>
+                            </div>
+                            <div className="modal-footer">
+                              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                              <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >작성</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>);
                 }}
               >수정</button>
-          <button className="btn btn-outline-danger btn-sm" onClick={() => {
-            if (window.confirm("정말삭제하시겠습니까?")) {
-              const newarr = [];
-              for (let i = 0; i < props.bData.length; i++) {
-                if (curr.no !== props.bData[i].no) {
-                  newarr.push(props.bData[i]);
+              <button className="btn btn-outline-danger btn-sm" onClick={() => {
+                if (window.confirm("정말삭제하시겠습니까?")) {
+                  const newarr = [];
+                  for (let i = 0; i < props.bData.length; i++) {
+                    if (curr.no !== props.bData[i].no) {
+                      newarr.push(props.bData[i]);
+                    }
+                  }
+                  props.setBData(newarr);
                 }
-              }
-              props.setBData(newarr);
-            }
-          }}>삭제</button>
-        </div>
+              }}>삭제</button>
+            </div>
           </div >
-    <p className="mt-2 mb-0">
-      {curr.text}
-    </p>
+          <p className="mt-2 mb-0">
+            {curr.text}
+          </p>
         </li >
       );
-}
+    }
   );
 
 
 
-return (<>
-  {/* 댓글 목록 출력 */}
-  <ul className="list-group mt-3" >
-    {lists}
-  </ul>
-</>);
+  return (<>
+    {/* 댓글 목록 출력 */}
+    <ul className="list-group mt-3" >
+      {lists}
+    </ul>
+  </>);
 }
 
 function App() {
@@ -216,7 +216,7 @@ function App() {
       <ModalWindow bData={bData} setBData={setBData} sN={sN} setSN={setSN} />
 
       <CommentList bData={bData} setBData={setBData} writer={writer} setWriter={setWriter}
-        text={text} setText={setText}/>
+        text={text} setText={setText} />
     </div>
   </>);
 }
