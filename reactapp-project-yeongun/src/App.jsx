@@ -20,7 +20,7 @@ function App(props) {
   return (<>
     <StatesProvider>
       {/* Chat 경로가 아니면 TopNavi 보이기 */}
-      {location.pathname !== '/chat' && <TopNavi />}
+      {location.pathname !== '/#/chat' && <TopNavi />}
       <Routes>
         <Route path='/' element={<Home />} />
         {MemberRoutes()}
@@ -29,7 +29,7 @@ function App(props) {
         {ArchiveBoard()}
         {Chat()}
       </Routes>
-      {location.pathname !== '/chat' && <Footer />}
+      {location.pathname !== '/#/chat' && <Footer />}
     </StatesProvider>
   </>); 
 }

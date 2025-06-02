@@ -225,6 +225,23 @@ body {
 }
 
 
+
+
+/* ✏️ 루트 컨테이너: flex 구조로 변경 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* ✏️ 화면 높이 기준으로 */
+}
+
+/* ✏️ 콘텐츠 영역은 남은 공간을 차지 */
+.main-content {
+  flex: 1;
+  padding: 20px; /* 필요시 */
+}
+/* ➕ 전체 레이아웃 설정: 푸터 하단 고정 구조 끝 */
+
+
 /* ➕ footer 영역 스타일 */
 /* ✏️ Footer 배경색도 동일하게 */
 .footer {
@@ -236,9 +253,10 @@ body {
   border-top: 2px solid #333;
   font-size: 14px;
   color: #ccc;
-  margin-top: 60px;
-}
 
+  /* ✏️ 항상 아래에 붙도록 margin-top 제거 */
+  margin-top: 0;
+}
 .footer-left {
   display: flex;
   align-items: center;
@@ -280,6 +298,7 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 h2 {
@@ -632,4 +651,263 @@ button[type="submit"]:hover {
 
 .id-check-group button:hover {
   background-color: #218838;
+}
+
+/* ➕ 자유게시판 컨테이너 */
+.free-board-container {
+  padding: 16px 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ➕ 헤더 제목 */
+.board-title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+/* ➕ 글쓰기 버튼 우측 정렬 */
+.write-button-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.write-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.write-button:hover {
+  background-color: #0056b3;
+}
+
+/* ➕ 게시판 테이블 스타일 */
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.board-table th, .board-table td {
+  border-bottom: 1px solid #ccc;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+/* ✏️ 각 열 너비 조정 */
+.th-no, .td-no {
+  width: 8%;
+}
+
+.th-title, .td-title {
+  width: 60%;
+  text-align: left;
+}
+
+.title-link {
+  color: #222;
+  text-decoration: none;
+}
+
+.title-link:hover {
+  text-decoration: underline;
+}
+
+.th-writer, .td-writer {
+  width: 17%;
+}
+
+.th-date, .td-date {
+  width: 15%;
+}
+
+/* ➕ 페이지네이션 스타일 */
+.pagination-wrap {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.pagination-link {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+}
+.pagination-link.active {
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+}
+
+
+
+/* 공통 */
+.freeview-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.title-center {
+  text-align: center;
+}
+.right-align {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 10px 0;
+}
+.btn {
+  padding: 6px 12px;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #555;
+}
+
+/* 테이블 */
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.board-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 12px;
+  background-color: #f0f0f0;
+}
+.board-meta td {
+  padding: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+.board-writer {
+  text-align: left;
+}
+.board-date {
+  text-align: right;
+}
+.board-content {
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* 이전/다음글 */
+.nav-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.nav-link {
+  color: #007bff;
+  text-decoration: none;
+}
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+
+/* 공통 버튼 스타일 */
+.btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: #e5e7eb;
+  border: none;
+  text-decoration: none;
+  color: #000;
+  margin-left: 6px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #d1d5db;
+}
+.btn-blue {
+  background-color: #bfdbfe;
+}
+.btn-blue:hover {
+  background-color: #93c5fd;
+}
+.btn-red {
+  background-color: #fecaca;
+}
+.btn-red:hover {
+  background-color: #fca5a5;
+}
+
+/* 상단 제목 */
+.freeview-header {
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* 상단 버튼 정렬 */
+.freeview-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* 게시글 전체 박스 */
+.freeview-article {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  padding: 1rem;
+}
+
+/* 작성자/날짜 줄 */
+.freeview-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* 제목 */
+.freeview-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* 내용 */
+.freeview-content {
+  min-height: 534px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  padding: 0.5rem;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+/* 이전글/다음글 */
+.freeview-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+.nav-link {
+  color: #2563eb;
+  text-decoration: none;
+}
+.nav-link:hover {
+  text-decoration: underline;
 }

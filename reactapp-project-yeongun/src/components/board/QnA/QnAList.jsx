@@ -91,20 +91,20 @@ function QnAList(props) {
         </table>
       </article>
 
-      <footer>
-        {[1, 2, 3, 4, 5].map(p => (
-          <Link
-            key={p}
-            to={`/qna/list/${p}`} // ex: /qna/list/3
-            style={{
-              margin: '0 5px',
-              textDecoration: p === currPage ? 'underline' : 'none',
-              fontWeight: p === currPage ? 'bold' : 'normal',
-            }}
-          >
-            {p}
-          </Link>
-        ))}
+      {/* 🔸 페이지네이션 */}
+      <footer className="pagination-wrap">
+        {dataSaves.map((_, idx) => {
+          const pageNum = idx + 1;
+          return (
+            <Link
+              key={pageNum}
+              to={`/free/list/${pageNum}`}
+              className={`pagination-link ${pageNum === currPage ? 'active' : ''}`}
+            >
+              {pageNum}
+            </Link>
+          );
+        })}
       </footer>
     </>
   );

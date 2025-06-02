@@ -1,4 +1,3 @@
-// FreeView.js
 import {
   collection,
   deleteDoc,
@@ -25,7 +24,6 @@ function FreeView() {
   useEffect(() => {
     const getView = async () => {
       try {
-        // 현재 게시글 가져오기
         const q = query(
           collection(firestore, 'freeBoard'),
           where('idx', '==', viewIdx)
@@ -39,16 +37,10 @@ function FreeView() {
         }
 
         const currentPost = snapshot.docs[0].data();
-
-        // ✅ writeDate: "YYYY.MM.DD/HH:mi/SS:mil" → "YYYY.MM.DD HH:mi"
         const wdate = currentPost.writeDate?.split('/');
-
         currentPost.writeDate = `${wdate[0]} ${wdate[1]}`;
-
-
         setViewData(currentPost);
 
-        // 다음글
         const nextQuery = query(
           collection(firestore, 'freeBoard'),
           where('idx', '>', viewIdx),
@@ -58,7 +50,6 @@ function FreeView() {
         const nextSnap = await getDocs(nextQuery);
         setNextIdx(!nextSnap.empty ? nextSnap.docs[0].data().idx : null);
 
-        // 이전글
         const prevQuery = query(
           collection(firestore, 'freeBoard'),
           where('idx', '<', viewIdx),
@@ -77,7 +68,6 @@ function FreeView() {
 
   useEffect(() => {
     if (!viewData || !viewData.writer) return;
-
     const islogined = sessionStorage.getItem('islogined');
     if (islogined) {
       const compareId = JSON.parse(islogined).id;
@@ -101,65 +91,42 @@ function FreeView() {
   if (!viewData) return <p>로딩 중...</p>;
 
   return (
-    <>
-      <header>
-        <h2>자유게시판-읽기</h2>
-      </header>
-      <nav>
-        <Link to="/free/list">목록</Link>&nbsp;
-        {isRight && (
-          <>
-            <Link to={`/free/edit/${viewIdx}`}>수정</Link>&nbsp;
-            <Link to="#" onClick={(e) => {
-              e.preventDefault();
-              if (confirm("정말 삭제하시겠습니까?")) deleteData();
-            }}>
-              삭제
-            </Link>
-          </>
-        )}
-      </nav>
-      <article>
-        <table id="boardTable">
-          <colgroup>
-            <col width="30%" />
-            <col width="*" />
-          </colgroup>
-          <tbody>
-            <tr>
-              <th>작성자</th>
-              <td>{viewData.writer}</td>
-            </tr>
-            <tr>
-              <th>제목</th>
-              <td>{viewData.title}</td>
-            </tr>
-            <tr>
-              <th>날짜</th>
-              <td>{viewData.writeDate}</td>{/* ✅ 포맷된 날짜 사용 */}
-            </tr>
-            <tr>
-              <th>내용</th>
-              <td>{viewData.contents}</td>
-            </tr>
-          </tbody>
-        </table>
-      </article>
-      <footer>
-        <button
-          onClick={() => navigate(`/free/view/${prevIdx}`)}
-          disabled={prevIdx === null}
-        >
-          이전글
-        </button>
-        <button
-          onClick={() => navigate(`/free/view/${nextIdx}`)}
-          disabled={nextIdx === null}
-        >
-          다음글
-        </button>
-      </footer>
-    </>
+      <>
+    <header className="freeview-header">자유게시판 - 읽기</header>
+
+    <nav className="freeview-nav">
+      <Link to="/free/list" className="btn">목록</Link>
+      {isRight && (
+        <>
+          <Link to={`/free/edit/${viewIdx}`} className="btn btn-blue">수정</Link>
+          <button onClick={() => {
+            if (confirm("정말 삭제하시겠습니까?")) deleteData();
+          }} className="btn btn-red">삭제</button>
+        </>
+      )}
+    </nav>
+
+    <article className="freeview-article">
+      <h2 className="freeview-title">{viewData.title}</h2>
+      <div className="freeview-info">
+        <span>작성자: <strong>{viewData.writer}</strong></span>
+        <span>작성일: {viewData.writeDate}</span>
+      </div>
+
+
+      <div className="freeview-content">{viewData.contents}</div>
+    </article>
+
+    <footer className="freeview-footer">
+      {prevIdx ? (
+        <Link to={`/free/view/${prevIdx}`} className="nav-link">&lt; 이전글</Link>
+      ) : <div></div>}
+
+      {nextIdx ? (
+        <Link to={`/free/view/${nextIdx}`} className="nav-link">다음글 &gt;</Link>
+      ) : <div></div>}
+    </footer>
+  </>
   );
 }
 

@@ -89,21 +89,20 @@ function ArchiveList(props) {
         </table>
       </article>
 
-      <footer>
-        {/* 페이지 이동 링크 (현재 페이지는 강조 표시) */}
-        {[1, 2, 3, 4, 5].map(p => (
-          <Link
-            key={p}
-            to={`/archive/list/${p}`} // ex: /archive/list/3
-            style={{
-              margin: '0 5px',
-              textDecoration: p === currPage ? 'underline' : 'none',
-              fontWeight: p === currPage ? 'bold' : 'normal',
-            }}
-          >
-            {p}
-          </Link>
-        ))}
+      {/* 🔸 페이지네이션 */}
+      <footer className="pagination-wrap">
+        {dataSaves.map((_, idx) => {
+          const pageNum = idx + 1;
+          return (
+            <Link
+              key={pageNum}
+              to={`/free/list/${pageNum}`}
+              className={`pagination-link ${pageNum === currPage ? 'active' : ''}`}
+            >
+              {pageNum}
+            </Link>
+          );
+        })}
       </footer>
     </>
   );
