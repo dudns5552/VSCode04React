@@ -11,6 +11,7 @@ const Home = () => {
     <Link to={'/free/list'}>자유게시판</Link>
     <Link to={'/qna/list'}>Q&A</Link>
     <Link to={'/archive/list'}>자료게시판</Link>
+    <Link onClick={() => window.open('/chat', '', 'width=400,height=600')}>채팅</Link>
   </>);
 }
 

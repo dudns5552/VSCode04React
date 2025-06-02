@@ -1,71 +1,95 @@
-import { useRef } from 'react';
-import Navi from './Navi';
-import { useState } from 'react';
+// ChatStart.jsx
+
+import React, { useState } from 'react';
+import ChatRoomList from './ChatRoomList';
+import { useNavigate } from 'react-router-dom';
 
 function ChatStart() {
+  //  새 채팅방 이름 상태 관리 (입력한 방명)
+  const [newRoomName, setNewRoomName] = useState('');
 
-  /* 
-  useRef 훅을 통해 변수를 생성하면 current라는 key를 가진 객체를
-  반환한다. 즉, { current : 초기값 }과 같은 형태가 된다. 
-  */
+  //  새 채팅방 입력창 표시 여부 상태 (처음엔 숨김)
+  const [showInput, setShowInput] = useState(false);
 
-  // input택의 DOM에 접근하기 위해 useRef로 변수 생성
-  // 대화방의 이름(아이디)
-  const refRoom = useRef();
-  // 접속자의 아이디
-  const [chatName, setChatName] = useState();
-  const refId = useRef();
+  //  로그인 안 했을 때 사용자가 입력하는 대화명 상태
+  const [chatName, setChatName] = useState('');
 
+  //  페이지 이동을 위한 react-router-dom 훅
+  const navigate = useNavigate();
+
+  //  현재 사용자 대화명을 반환하는 함수
+  //  로그인 상태면 세션에서 id를 꺼내고, 아니면 chatName 상태값 사용
   const getChatName = () => {
     const session = sessionStorage.getItem('islogined');
-    if (session) {
-      return JSON.parse(session).id;
-    } else {
-      return refId.current?.value || '';  // ❗null 체크
-    }
+    return session ? JSON.parse(session).id : chatName;
   };
-  /* 
-  open() 함수를 이용해서 채팅창을 팝업으로 오픈한다.
-    형식] open(팝업창의 요청URL, 창의 이름, 창의속성);
-      두번째 인수인 '창의이름'에 이름을 부여하면, 새로운 창을 열었을때
-      항상 같은 위치에서 열리게된다. 즉, 새로운 창을 열수 없으므로 
-      여기서는 '창의이름'을 부여하지 않아야한다.
-  */
-  const openChatWin = () => {
-    /* 
-    useRef를 통해 참조한 input의 DOM을 이용해서 입력값을 얻어온다.
-    그리고 팝업창을 띄울때 파라미터로 사용한다. 즉, 대화창을 팝업으로
-    띄울때 방명과 대화명을 전달해야 한다.
-    */
-    const room = refRoom.current?.value || 'room1';
-    const user = getChatName();
 
-    if (!user) {
-      alert('대화명을 입력해주세요!');
+  //  [새 채팅] 버튼 클릭 시 입력창 보이도록 상태 변경
+  const handleNewChatClick = () => {
+    setShowInput(true);
+  };
+
+  //  새 채팅 시작 버튼 클릭 시 실행
+  //  사용자 대화명과 방명이 모두 있으면 채팅 페이지로 이동
+  //  없으면 경고창 띄움
+  const handleStartNewChat = () => {
+    const user = getChatName();
+    if (!user || !newRoomName) {
+      alert('대화명과 방명을 모두 입력하세요.');
       return;
     }
-
-    window.open(`/chat/talk?roomId=${room}&userId=${user}`, '', 'width=500,height=700');
+    //  쿼리스트링(roomId, userId)을 붙여서 이동
+    navigate(`/chat/talk?roomId=${newRoomName}&userId=${user}`);
   };
 
-  return (<>
+  return (
     <div className="App">
-      <Navi />
-      <h2>Firebase - Realtime Database Chatting</h2>
-      {/* input에 앞에서 생성한 Ref변수를 추가하여 DOM에 접근한다.
-        이렇게 하면 getElementXX와 같은 함수 없이 쉽게 접근할 수 있다. */}
-      {/* 대화방의 ID는 room1로 고정한다. 단 필요하다면 변경하거나
-        입력할 수 있다. */}
-      방명 : <input type="text" name='roomId' value='room1'
-        ref={refRoom} /><br />
-      {/* 대화명 입력창은 로그인 상태가 아닌 경우에만 보이게 */}
+      <h2>Firebase - 채팅 시작</h2>
+
+      {/* 
+         로그인하지 않은 상태면 대화명 입력란 보여줌 
+         로그인했으면 세션에서 아이디를 바로 사용하기 때문에 안 보임
+      */}
       {!sessionStorage.getItem('islogined') && (
-        <>대화명 : <input type="text" name="userId" ref={refId} /><br /></>
+        <>
+          대화명: <input
+            type="text"
+            name="userId"
+            value={chatName}
+            onChange={(e) => setChatName(e.target.value)}
+          /><br />
+        </>
       )}
 
-      {/* 버튼을 누르면 팝업으로 대화창을 오픈한다. */}
-      <button onClick={openChatWin}>채팅시작</button>
+      {/* 
+         새 채팅 입력창이 보이지 않으면 새 채팅 버튼 표시 
+         누르면 입력창이 보이도록 상태 변경됨 
+      */}
+      {!showInput ? (
+        <button onClick={handleNewChatClick}>[새 채팅]</button>
+      ) : (
+        <>
+          {/* 
+             새 채팅방 이름 입력란과 채팅 시작 버튼 표시
+          */}
+          방명: <input
+            type="text"
+            value={newRoomName}
+            onChange={(e) => setNewRoomName(e.target.value)}
+          /><br />
+          <button onClick={handleStartNewChat}>채팅 시작</button>
+        </>
+      )}
+
+      <hr />
+
+      {/* 
+         기존 채팅방 목록을 보여주는 컴포넌트 
+         현재 사용자 대화명(userId)을 prop으로 전달
+      */}
+      <ChatRoomList userId={getChatName()} />
     </div>
-  </>);
+  );
 }
+
 export default ChatStart;
