@@ -117,76 +117,49 @@ function QnAView() {
   if (!viewData) return <p>로딩 중...</p>;
 
   return (
-    <>
-      <header>
-        <h2>Q&A게시판-읽기</h2>
-      </header>
-      <nav>
-        <Link to="/qna/list">목록</Link>&nbsp;
+    <div className="freeview-container">
+      <header className="freeview-header">Q&A게시판</header>
+      <nav className="freeview-nav">
+        <Link to="/qna/list" className="btn">목록</Link>&nbsp;
         {isRight && (
           <>
-            <Link to={`/qna/edit/${viewIdx}`}>수정</Link>&nbsp;
+            <Link to={`/qna/edit/${viewIdx}`} className="btn">수정</Link>&nbsp;
             <Link to="#" onClick={(e) => {
               e.preventDefault();
               if (confirm("정말 삭제하시겠습니까?")) deleteData();
-            }}>
-              삭제
-            </Link>
+            }} className="btn">삭제</Link>
           </>
         )}
       </nav>
-      <article>
-        <table id="boardTable">
-          <colgroup>
-            <col width="30%" />
-            <col width="*" />
-          </colgroup>
-          <tbody>
-            <tr>
-              <th>작성자</th>
-              <td>{viewData.writer}</td>
-            </tr>
-            <tr>
-              <th>제목</th>
-              <td>{viewData.title}</td>
-            </tr>
-            <tr>
-              <th>날짜</th>
-              <td>{viewData.writeDate}</td>
-            </tr>
-            <tr>
-              <th>내용</th>
-              <td>{viewData.contents}</td>
-            </tr>
-            {/* 댓글 기능 구현 */}
-          </tbody>
-        </table>
+      <article className="freeview-article">
+        <h2 className="freeview-title">{viewData.title}</h2>
+        <div className="freeview-info">
+          <span>작성자: <strong>{viewData.writer}</strong></span>
+          <span className="indent-right">작성일: {viewData.writeDate}</span>
+        </div>
+        
+        <div className="qna-content">{viewData.contents}</div>
         <div className="container mt-4">
           <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal"
             onClick={comCheck}>
             댓글 작성
           </button>
-          <ComWrite viewIdx={viewIdx} docRef={docRef} 
+          <ComWrite viewIdx={viewIdx} docRef={docRef}
             isComState={isComState} setIsComState={setIsComState} />
           <ComList viewIdx={viewIdx} docRef={docRef}
             isComState={isComState} setIsComState={setIsComState} />
         </div>
       </article>
-      <footer>
-        <button
-          onClick={() => navigate(`/qna/view/${prevIdx}`)}
-          disabled={prevIdx === null}
-        >
-          이전글
-        </button>
-        <button
-          onClick={() => navigate(`/qna/view/${nextIdx}`)}
-          disabled={nextIdx === null}
-        >
-          다음글
-        </button>
+      <footer className="freeview-footer">
+        {prevIdx ? (
+          <Link to={`/free/view/${prevIdx}`} className="nav-link">이전글</Link>
+        ) : <div></div>}
+
+        {nextIdx ? (
+          <Link to={`/free/view/${nextIdx}`} className="nav-link">다음글</Link>
+        ) : <div></div>}
       </footer>
-    </>
+    </div >
   );
 }
 

@@ -1,3 +1,4 @@
+// 자유게시판 수정 페이지
 import { collection, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -9,7 +10,7 @@ function FreeEdit() {
   const { idx } = useParams();
   const viewIdx = Number(idx);
 
-  const [snapshot, setSnapshot] = useState(null); // 💡 updateDoc에서 사용할 문서 참조 저장
+  const [snapshot, setSnapshot] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,19 +21,19 @@ function FreeEdit() {
           where('idx', '==', viewIdx)
         );
 
-        const querySnapshot = await getDocs(q); // ✅ getDocs의 결과를 지역 변수에 저장
+        const querySnapshot = await getDocs(q);
 
-        if (querySnapshot.empty) { // ✅ .empty를 사용해 게시글 존재 여부 확인
+        if (querySnapshot.empty) {
           alert('존재하지 않는 게시글입니다.');
           navigate('/free/list');
           return;
         }
 
-        const doc = querySnapshot.docs[0]; // ✅ 첫 번째 문서 선택
+        const doc = querySnapshot.docs[0];
         const data = doc.data();
 
-        setSnapshot(doc.ref); // ✅ 문서 참조(doc.ref)를 상태로 저장하여 updateDoc에 사용
-        setTitle(data.title); // ✅ 상태 직접 설정 (currentPost 생략 가능)
+        setSnapshot(doc.ref);
+        setTitle(data.title);
         setContents(data.contents);
       } catch (error) {
         console.error('게시글 불러오기 실패:', error);
@@ -52,7 +53,7 @@ function FreeEdit() {
       await updateDoc(snapshot, {
         title: title,
         contents: contents
-      }); // ✅ 문서 참조를 이용해 updateDoc 수행
+      });
 
       console.log('입력 성공');
       navigate('/free/list');
@@ -66,20 +67,22 @@ function FreeEdit() {
       <header>
         <h2>자유게시판 - 수정</h2>
       </header>
+
       <nav>
-        <Link to="/free/list">목록</Link>
+        <Link to="/free/list" className="nav-link tar">목록</Link>
       </nav>
-      <article>
-        <form
-          onSubmit={(e) => {
+
+      <article className="write-article">
+        <form onSubmit={(e) => {
             e.preventDefault();
             Edit();
           }}
         >
           <input type="hidden" name="collection" value="freeBoard" />
-          <table id="boardTable">
+
+          <table className="write-table">
             <colgroup>
-              <col width="30%" />
+              <col width="20%" />
               <col width="*" />
             </colgroup>
             <tbody>
@@ -91,6 +94,7 @@ function FreeEdit() {
                     name="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    className="input-title"
                   />
                 </td>
               </tr>
@@ -99,16 +103,18 @@ function FreeEdit() {
                 <td>
                   <textarea
                     name="contents"
-                    cols="22"
                     rows="8"
                     value={contents}
                     onChange={(e) => setContents(e.target.value)}
+                    className="input-contents"
                   ></textarea>
                 </td>
               </tr>
             </tbody>
           </table>
-          <input type="submit" value="전송" />
+          <div className="btn-area">
+            <input type="submit" value="전송" className="submit-btn" />
+          </div>
         </form>
       </article>
     </>

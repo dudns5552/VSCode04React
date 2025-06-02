@@ -483,7 +483,6 @@ button[type="submit"]:hover {
 }
 
 .login-links a {
-  color: #007bff;
   text-decoration: none;
   margin: 0 6px;
   transition: color 0.2s ease;
@@ -491,7 +490,6 @@ button[type="submit"]:hover {
 
 .login-links a:hover {
   text-decoration: underline;
-  color: #0056b3;
 }
 
 .login-links span {
@@ -657,6 +655,7 @@ button[type="submit"]:hover {
 .free-board-container {
   padding: 16px 32px;
   max-width: 1000px;
+  min-height: 789px;
   margin: 0 auto;
 }
 
@@ -682,6 +681,7 @@ button[type="submit"]:hover {
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
+  margin-right: 12px;
 }
 
 .write-button:hover {
@@ -750,7 +750,7 @@ button[type="submit"]:hover {
 
 /* 공통 */
 .freeview-container {
-  max-width: 800px;
+  max-width: 93%;
   margin: 0 auto;
 }
 .title-center {
@@ -809,20 +809,13 @@ button[type="submit"]:hover {
   justify-content: space-between;
   margin-top: 20px;
 }
-.nav-link {
-  color: #007bff;
-  text-decoration: none;
-}
-.nav-link:hover {
-  text-decoration: underline;
-}
 
 
 /* 공통 버튼 스타일 */
 .btn {
   padding: 6px 12px;
   border-radius: 4px;
-  background-color: #e5e7eb;
+  background-color: #fff;
   border: none;
   text-decoration: none;
   color: #000;
@@ -851,7 +844,8 @@ button[type="submit"]:hover {
   font-weight: bold;
   border-bottom: 1px solid #ccc;
   padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  margin: 1rem;
+  text-align: center;
 }
 
 /* 상단 버튼 정렬 */
@@ -868,6 +862,7 @@ button[type="submit"]:hover {
   border-radius: 6px;
   background-color: white;
   padding: 1rem;
+  text-indent: 8px;
 }
 
 /* 작성자/날짜 줄 */
@@ -902,12 +897,135 @@ button[type="submit"]:hover {
 .freeview-footer {
   display: flex;
   justify-content: space-between;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+  padding-bottom: 16px;
 }
 .nav-link {
-  color: #2563eb;
   text-decoration: none;
+  font: 16px #333;
+  font-weight: bold;
+  padding: 8px;
 }
 .nav-link:hover {
   text-decoration: underline;
+}
+
+
+
+/* 자유게시판 글작성 */
+
+/* 공통 레이아웃 */
+
+nav {
+  padding: 12px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ddd;
+}
+
+nav a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+article {
+  padding: 20px 30px;
+  max-width: 900px;
+  margin: auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* ➕ 작성 페이지 전용 클래스 */
+.write-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.write-table th {
+  text-align: left;
+  padding: 10px;
+  background-color: white;
+  border-right: 1px solid #ccc;
+  vertical-align: middle;
+  width: 100px;
+  
+}
+
+.write-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.input-title {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.input-contents {
+  width: 100%;
+  height: 486px;
+  padding: 10px;
+  resize: vertical;
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* 버튼 영역 */
+.btn-area {
+  text-align: right;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.tar{
+  text-align: right;
+  padding-right: 33px;
+}
+
+/* 글작성 부분 끝 */
+
+
+.qna-content {
+  min-height: 100px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  padding: 0.5rem;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.indent-right {
+  margin-right: 8px;
+}
+
+.margin-top {
+  margin-top: 20px;
+}
+
+.arc-input-contents {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  resize: vertical;
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
 }

@@ -91,42 +91,42 @@ function FreeView() {
   if (!viewData) return <p>로딩 중...</p>;
 
   return (
-      <>
-    <header className="freeview-header">자유게시판 - 읽기</header>
+    <div className="freeview-container">
+      <header className="freeview-header">자유게시판</header>
 
-    <nav className="freeview-nav">
-      <Link to="/free/list" className="btn">목록</Link>
-      {isRight && (
-        <>
-          <Link to={`/free/edit/${viewIdx}`} className="btn btn-blue">수정</Link>
-          <button onClick={() => {
-            if (confirm("정말 삭제하시겠습니까?")) deleteData();
-          }} className="btn btn-red">삭제</button>
-        </>
-      )}
-    </nav>
+      <nav className="freeview-nav">
+        <Link to="/free/list" className="btn">목록</Link>
+        {isRight && (
+          <>
+            <Link to={`/free/edit/${viewIdx}`} className="btn">수정</Link>
+            <button onClick={() => {
+              if (confirm("정말 삭제하시겠습니까?")) deleteData();
+            }} className="btn">삭제</button>
+          </>
+        )}
+      </nav>
 
-    <article className="freeview-article">
-      <h2 className="freeview-title">{viewData.title}</h2>
-      <div className="freeview-info">
-        <span>작성자: <strong>{viewData.writer}</strong></span>
-        <span>작성일: {viewData.writeDate}</span>
-      </div>
+      <article className="freeview-article">
+        <h2 className="freeview-title">{viewData.title}</h2>
+        <div className="freeview-info">
+          <span>작성자: <strong>{viewData.writer}</strong></span>
+          <span className="indent-right">작성일: {viewData.writeDate}</span>
+        </div>
 
 
-      <div className="freeview-content">{viewData.contents}</div>
-    </article>
+        <div className="freeview-content">{viewData.contents}</div>
+      </article>
 
-    <footer className="freeview-footer">
-      {prevIdx ? (
-        <Link to={`/free/view/${prevIdx}`} className="nav-link">&lt; 이전글</Link>
-      ) : <div></div>}
+      <footer className="freeview-footer">
+        {prevIdx ? (
+          <Link to={`/free/view/${prevIdx}`} className="nav-link">이전글</Link>
+        ) : <div></div>}
 
-      {nextIdx ? (
-        <Link to={`/free/view/${nextIdx}`} className="nav-link">다음글 &gt;</Link>
-      ) : <div></div>}
-    </footer>
-  </>
+        {nextIdx ? (
+          <Link to={`/free/view/${nextIdx}`} className="nav-link">다음글</Link>
+        ) : <div></div>}
+      </footer>
+    </div>
   );
 }
 

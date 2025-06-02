@@ -31,7 +31,7 @@ function ArchiveList(props) {
         return (
           <tr key={board.idx}>
             <td className="cen">{board.idx}</td>
-            <td><Link to={`/archive/view/${board.idx}`}>{board.title}</Link></td>
+            <td><Link to={`/archive/view/${board.idx}`} className="title-link">{board.title}</Link></td>
             <td className="cen">{board.writer}</td>
             <td className="cen">{date === todayStr ? hours : date}</td>
           </tr>
@@ -56,34 +56,33 @@ function ArchiveList(props) {
   }, [dataSaves, currPage]);
 
   return (
-    <>
-      <header>
-        <h2>자유게시판-목록</h2>
+    <div className='free-board-container'>
+      <header className='board-header'>
+        <h2 className="board-title">자료게시판</h2>
       </header>
 
-      <nav>
-        <Link to="/archive/write" onClick={(e) => {
+      <div className="write-button-wrap">
+        <Link to="/archive/write" className="write-button"
+        onClick={(e) => {
           const islogined = sessionStorage.getItem('islogined');
           if (!islogined) {
             alert('글쓰기는 로그인 후 가능합니다.');
             e.preventDefault(); // 링크 이동 막기
           }
         }}>글쓰기</Link>
-      </nav>
+      </div>
 
-      <article>
-        {/* 게시글 목록 테이블 */}
-        <table>
+      <article className='board-table-wrap'>
+        <table className='board-table'>
           <thead>
             <tr>
-              <th>No</th>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>날짜</th>
+              <th className="th-no">No</th>
+              <th className="th-title">제목</th>
+              <th className="th-writer">작성자</th>
+              <th className="th-date">날짜</th>
             </tr>
           </thead>
           <tbody>
-            {/* 현재 페이지의 게시글 tr 출력 */}
             {listData}
           </tbody>
         </table>
@@ -104,7 +103,7 @@ function ArchiveList(props) {
           );
         })}
       </footer>
-    </>
+    </div>
   );
 }
 

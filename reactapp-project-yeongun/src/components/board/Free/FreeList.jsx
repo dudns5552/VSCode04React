@@ -56,7 +56,7 @@ function FreeList() {
   return (
     <div className="free-board-container">
       <header className="board-header">
-        <h2 className="board-title">자유게시판 - 목록</h2>
+        <h2 className="board-title">자유게시판</h2>
       </header>
 
       {/* 🔸 글쓰기 버튼 영역 */}

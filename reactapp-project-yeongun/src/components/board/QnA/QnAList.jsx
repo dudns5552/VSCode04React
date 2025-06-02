@@ -33,7 +33,7 @@ function QnAList(props) {
         return (
           <tr key={board.idx}>
             <td className="cen">{board.idx}</td>
-            <td><Link to={`/qna/view/${board.idx}`}>{board.title}</Link></td>
+            <td><Link to={`/qna/view/${board.idx}`} className="title-link">{board.title}</Link></td>
             <td className="cen">{board.writer}</td>
             <td className="cen">{date === todayStr ? hours : date}</td>
           </tr>
@@ -60,29 +60,30 @@ function QnAList(props) {
   }, [dataSaves, currPage]);
 
   return (
-    <>
-      <header>
-        <h2>Q&A게시판-목록</h2>
+    <div className='free-board-container'>
+      <header className='board-header'>
+        <h2 className="board-title">Q&A게시판-목록</h2>
       </header>
 
-      <nav>
-        <Link to="/qna/write" onClick={(e) => {
-          const islogined = sessionStorage.getItem('islogined');
-          if (!islogined) {
-            alert('글쓰기는 로그인 후 가능합니다.');
-            e.preventDefault();
-          }
-        }}>글쓰기</Link>
-      </nav>
-
-      <article>
-        <table>
+      <div className="write-button-wrap">
+        <Link to="/qna/write"
+          className="write-button"
+          onClick={(e) => {
+            const islogined = sessionStorage.getItem('islogined');
+            if (!islogined) {
+              alert('글쓰기는 로그인 후 가능합니다.');
+              e.preventDefault();
+            }
+          }}>글쓰기</Link>
+      </div>
+      <article className='board-table-wrap'>
+        <table className='board-table'>
           <thead>
             <tr>
-              <th>No</th>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>날짜</th>
+              <th className="th-no">No</th>
+              <th className="th-title">제목</th>
+              <th className="th-writer">작성자</th>
+              <th className="th-date">날짜</th>
             </tr>
           </thead>
           <tbody>
@@ -106,7 +107,7 @@ function QnAList(props) {
           );
         })}
       </footer>
-    </>
+    </div>
   );
 }
 

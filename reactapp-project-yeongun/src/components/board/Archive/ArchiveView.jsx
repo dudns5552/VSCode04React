@@ -134,58 +134,40 @@ function ArchiveView() {
   if (!viewData) return <p>로딩 중...</p>;
 
   return (
-    <>
-      <header>
-        <h2>자료실게시판-읽기</h2>
-      </header>
-      <nav>
-        <Link to="/archive/list">목록</Link>&nbsp;
+    <div className="freeview-container">
+      <header className="freeview-header">자료게시판</header>
+      
+      <nav className="freeview-nav">
+        <Link to="/archive/list" className="btn">목록</Link>&nbsp;
         {isRight && (
           <>
-            <Link to={`/archive/edit/${viewIdx}`}>수정</Link>&nbsp;
+            <Link to={`/archive/edit/${viewIdx}`} className="btn">수정</Link>&nbsp;
             <Link
               to="#"
               onClick={(e) => {
                 e.preventDefault();
                 if (window.confirm("정말 삭제하시겠습니까?")) deleteData();
-              }}
-            >
-              삭제
-            </Link>
+              }} className="btn">삭제</Link>
           </>
         )}
       </nav>
-      <article>
-        <table id="boardTable">
-          <colgroup>
-            <col width="30%" />
-            <col width="*" />
-          </colgroup>
-          <tbody>
-            <tr>
-              <th>작성자</th>
-              <td>{viewData.writer}</td>
-            </tr>
-            <tr>
-              <th>제목</th>
-              <td>{viewData.title}</td>
-            </tr>
-            <tr>
-              <th>날짜</th>
-              <td>{viewData.writeDate}</td>
-            </tr>
-            <tr>
-              <th>내용</th>
-              <td>{viewData.contents}</td>
-            </tr>
-          </tbody>
-        </table>
+      
+      <article className="freeview-article">
+        <h2 className="freeview-title">{viewData.title}</h2>
+        <div className="freeview-info">
+          <span>작성자: <strong>{viewData.writer}</strong></span>
+          <span className="indent-right">작성일: {viewData.writeDate}</span>
+        </div>
+
+
+        <div className="freeview-content">
+          <div>{viewData.contents}</div>
         {viewData.files && viewData.files.map((file) => {
           const extension = file.name.split('.').pop().toLowerCase();
           const isImage = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'].includes(extension);
 
           return (
-            <div key={file.name} style={{ marginBottom: 10 }}>
+            <div key={file.name} style={{ marginBottom: 10 }}  className="margin-top">
               {isImage ? (
                 <img
                   src={file.url}
@@ -204,22 +186,18 @@ function ArchiveView() {
             </div>
           );
         })}
+        </div>
       </article>
-      <footer>
-        <button
-          onClick={() => navigate(`/archive/view/${prevIdx}`)}
-          disabled={prevIdx === null}
-        >
-          이전글
-        </button>
-        <button
-          onClick={() => navigate(`/archive/view/${nextIdx}`)}
-          disabled={nextIdx === null}
-        >
-          다음글
-        </button>
+      <footer className="freeview-footer">
+        {prevIdx ? (
+          <Link to={`/free/view/${prevIdx}`} className="nav-link">이전글</Link>
+        ) : <div></div>}
+
+        {nextIdx ? (
+          <Link to={`/free/view/${nextIdx}`} className="nav-link">다음글</Link>
+        ) : <div></div>}
       </footer>
-    </>
+    </div>
   );
 }
 

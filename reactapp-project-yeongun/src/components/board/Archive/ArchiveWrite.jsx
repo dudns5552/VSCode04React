@@ -55,15 +55,15 @@ function ArchiveWrite() {
   console.log('storageRef', storageRef);
 
   return (
-    <>
-      <header>
-        <h2>자료게시판 - 작성</h2>
+    <div className="free-board-container">
+      <header header className="freeview-header">
+        <h2 className="board-title">자료게시판</h2>
       </header>
       <nav>
-        <Link to="/archive/list">목록</Link>
+        <Link to="/archive/list" className="nav-link tar">목록</Link>
       </nav>
 
-      <article>
+      <article className="write-article">
         {/* 🔽 글쓰기 폼 시작 */}
         <form
           onSubmit={async (e) => {
@@ -116,9 +116,9 @@ function ArchiveWrite() {
           <input type="hidden" name="collection" value="archiveBoard" />
 
           {/* 🔽 글 입력 폼 */}
-          <table id="boardTable">
+          <table className="write-table">
             <colgroup>
-              <col width="30%" />
+              <col width="20%" />
               <col width="*" />
             </colgroup>
             <tbody>
@@ -130,6 +130,7 @@ function ArchiveWrite() {
                     name="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    className="input-title"
                   />
                 </td>
               </tr>
@@ -138,10 +139,10 @@ function ArchiveWrite() {
                 <td>
                   <textarea
                     name="contents"
-                    cols="22"
-                    rows="8"
+                    rows="10"
                     value={contents}
                     onChange={(e) => setContents(e.target.value)}
+                    className="arc-input-contents"
                   ></textarea>
                 </td>
               </tr>
@@ -187,7 +188,8 @@ function ArchiveWrite() {
                 ) : (
                   <a href={preview} target="_blank" rel="noopener noreferrer">{file.name}</a>
                 )}
-                <button onClick={() => {
+                <button className="btn btn-red"
+                 onClick={() => {
                     // 삭제 처리
                     const newPreviewArr = filesPreview.filter((_, idx) => idx !== delIdx);
                     const newUploadFilesArr = uploadFiles.filter((_, idx) => idx !== delIdx);
@@ -199,11 +201,13 @@ function ArchiveWrite() {
           })}
           {/* // 파일 미리보기 출력 끝 */}
 
-          <input type="submit" value="전송" />
+          <div className="btn-area">
+            <input type="submit" value="전송" className="submit-btn" />
+          </div>
         </form>
         {/* 🔽 글쓰기 폼 끝 */}
       </article>
-    </>
+    </div>
   );
 }
 

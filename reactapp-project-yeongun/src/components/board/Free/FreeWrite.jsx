@@ -6,7 +6,6 @@ import { firestore } from "../../../firebaseConfig";
 function FreeWrite() {
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
-
   const navigate = useNavigate();
 
   // 로그인된 사용자 ID 가져오기
@@ -20,10 +19,7 @@ function FreeWrite() {
     const day = ("0" + dateObj.getDate()).slice(-2);
     const hour = ("0" + dateObj.getHours()).slice(-2);
     const mi = ("0" + dateObj.getMinutes()).slice(-2);
-    // const sec = ("0" + dateObj.getSeconds()).slice(-2);
-    // const milSec = dateObj.getMilliseconds();
-
-    return `${year}.${month}.${day}/${hour}:${mi}` // ${sec}:${milSec};
+    return `${year}.${month}.${day}/${hour}:${mi}`;
   };
 
   // 인덱스 자동 증가
@@ -31,7 +27,6 @@ function FreeWrite() {
     const idxRef = collection(firestore, 'freeBoard');
     const q = query(idxRef, orderBy('idx', 'desc'), limit(1));
     const querySnapshot = await getDocs(q);
-
     if (!querySnapshot.empty) {
       const maxIdx = querySnapshot.docs[0].data().idx;
       return maxIdx + 1;
@@ -44,22 +39,21 @@ function FreeWrite() {
   const write = async (collectionName, data) => {
     await addDoc(collection(firestore, collectionName), data);
     console.log('입력 성공');
-    navigate('/free/list'); // 작성 후 목록으로 이동
+    navigate('/free/list');
   };
 
   return (
-    <>
-      <header>
-        <h2>자유게시판 - 작성</h2>
+    <div className="free-board-container">
+      <header className="freeview-header">
+        <h2 className="board-title">자유게시판</h2>
       </header>
       <nav>
-        <Link to="/free/list">목록</Link>
+        <Link to="/free/list" className="nav-link tar">목록</Link>
       </nav>
-      <article>
+      <article className="write-article">
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-
             if (title.trim() === '') {
               alert('제목을 입력해주세요.');
               return;
@@ -68,11 +62,9 @@ function FreeWrite() {
               alert('내용을 입력해주세요.');
               return;
             }
-
             const newIdx = await getNewIdx();
             const writeDate = nowDate();
             const collectionName = e.target.collection.value;
-
             const newData = {
               idx: newIdx,
               title: title,
@@ -80,15 +72,14 @@ function FreeWrite() {
               writeDate: writeDate,
               contents: contents,
             };
-
             await write(collectionName, newData);
           }}
         >
           <input type="hidden" name="collection" value="freeBoard" />
 
-          <table id="boardTable">
+          <table className="write-table">
             <colgroup>
-              <col width="30%" />
+              <col width="20%" />
               <col width="*" />
             </colgroup>
             <tbody>
@@ -100,6 +91,7 @@ function FreeWrite() {
                     name="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    className="input-title"
                   />
                 </td>
               </tr>
@@ -108,20 +100,22 @@ function FreeWrite() {
                 <td>
                   <textarea
                     name="contents"
-                    cols="22"
-                    rows="8"
+                    rows="10"
                     value={contents}
                     onChange={(e) => setContents(e.target.value)}
+                    className="input-contents"
                   ></textarea>
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <input type="submit" value="전송" />
+          <div className="btn-area">
+            <input type="submit" value="전송" className="submit-btn" />
+          </div>
         </form>
       </article>
-    </>
+    </div>
   );
 }
 
