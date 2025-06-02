@@ -10,6 +10,7 @@ import QnABoard from './routes/QnABoard';
 import { StatesProvider }  from './commons/StatesContext';
 import ArchiveBoard from './routes/ArchiveBoard';
 import Chat from './routes/Chat';
+import Footer from './components/Footer';
 
 
 
@@ -28,6 +29,7 @@ function App(props) {
         {ArchiveBoard()}
         {Chat()}
       </Routes>
+      {location.pathname !== '/chat' && <Footer />}
     </StatesProvider>
   </>); 
 }

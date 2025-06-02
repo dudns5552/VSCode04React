@@ -124,7 +124,7 @@ function Signup(props) {
             <tr>
               <th><label htmlFor="id">아이디</label></th>
               <td>
-                <div className="signup-inline">
+                <div className="id-check-group">
                   <input type="text" id="id" name="id" required
                     value={formData.id}
                     onChange={(e) => {
@@ -162,7 +162,7 @@ function Signup(props) {
             <tr>
               <th><label htmlFor="email">이메일</label></th>
               <td>
-                <div className="signup-email-row">
+                <div className="email-inputs">
                   <input type="text" name="emailId" required
                     value={formData.emailId}
                     onChange={(e) => setFormData({ ...formData, emailId: e.target.value })} />
@@ -184,9 +184,9 @@ function Signup(props) {
             </tr>
 
             <tr>
-              <th><label htmlFor="phone">휴대전화번호</label></th>
+              <th><label htmlFor="phone">휴대전화</label></th>
               <td>
-                <div className="signup-phone-row">
+                <div className="phone-inputs">
                   <input type="text" maxLength="3" required name='p1' id='p1' value={formData.p1}
                     onChange={(e) => {
                       setFormData({ ...formData, p1: e.target.value });
@@ -212,16 +212,18 @@ function Signup(props) {
             <tr>
               <th><label htmlFor="zipcode">주소</label></th>
               <td>
-                <div className="signup-inline">
+                <div className="address-group">
                   <input type="text" id="zipcode" name="zipcode" className="signup-zipcode" readOnly required
                     value={formData.zipcode} />
                   <button type="button" className="signup-inline-button" onClick={searchAdd}>주소찾기</button>
                 </div>
+                <div className="address-detail" >
                 <input type="text" id='address' name="address" placeholder="기본주소" readOnly className="signup-mt8"
                   value={formData.address1} />
                 <input type="text" id='addressDetail' name="addressDetail" placeholder="상세주소" className="signup-mt8"
                   value={formData.address2}
                   onChange={(e) => setFormData({ ...formData, address2: e.target.value })} />
+                </div>
               </td>
             </tr>
           </tbody>
