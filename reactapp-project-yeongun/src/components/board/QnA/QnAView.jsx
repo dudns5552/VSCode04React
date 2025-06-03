@@ -25,6 +25,7 @@ function QnAView() {
   const [docRef, setDocRef] = useState();
   const [comId, setComId] = useState('');
   const [isComState, setIsComState] = useState(false);
+  const [islogined, setIslogined] = useState();
 
 
   useEffect(() => {
@@ -85,13 +86,13 @@ function QnAView() {
   useEffect(() => {
     if (!viewData || !viewData.writer) return;
 
-    const islogined = sessionStorage.getItem('islogined');
+    setIslogined(sessionStorage.getItem('islogined'));
     if (islogined) {
       const compareId = JSON.parse(islogined).id;
       setComId(compareId);
       setIsRight(viewData.writer === compareId);
     }
-  }, [viewData]);
+  }, [viewData, islogined]);
 
   const deleteData = async () => {
     try {
@@ -106,13 +107,6 @@ function QnAView() {
     }
   };
 
-  const comCheck = async () => {
-    if (!comId) {
-      alert('댓글 작성은 로그인 가능합니다.')
-      return;
-    }
-
-  }
 
   if (!viewData) return <p>로딩 중...</p>;
 
@@ -137,11 +131,16 @@ function QnAView() {
           <span>작성자: <strong>{viewData.writer}</strong></span>
           <span className="indent-right">작성일: {viewData.writeDate}</span>
         </div>
-        
+
         <div className="qna-content">{viewData.contents}</div>
         <div className="container mt-4">
-          <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal"
-            onClick={comCheck}>
+          <button className="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target={comId ?"#commentModal" :false}
+            onClick={(e) => {
+              if (!islogined) {
+                alert('댓글 작성은 로그인 후 가능합니다.')
+              }
+            }}>
             댓글 작성
           </button>
           <ComWrite viewIdx={viewIdx} docRef={docRef}

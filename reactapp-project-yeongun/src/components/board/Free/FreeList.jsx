@@ -4,14 +4,18 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 function FreeList() {
+  // 데이터 저장을 위한 스테이트
   const [dataSaves, setDataSaves] = useState([]);
   const [listData, setListData] = useState([]);
+
+  // 페이지를 나타내는 스테이트
   const { page = 1 } = useParams();
   const currPage = Number(page);
 
   useEffect(() => {
     const getCollection = async () => {
-      const q = query(collection(firestore, "freeBoard"), orderBy("idx", "desc"), limit(100));
+      const q = query(collection(firestore, "freeBoard"), 
+        orderBy("idx", "desc"), limit(100));
       const querySnapshot = await getDocs(q);
 
       const dateObj = new Date();
@@ -28,10 +32,12 @@ function FreeList() {
           <tr key={board.idx}>
             <td className="td-no">{board.idx}</td>
             <td className="td-title">
-              <Link to={`/Free/view/${board.idx}`} className="title-link">{board.title}</Link>
+              <Link to={`/Free/view/${board.idx}`} 
+                className="title-link">{board.title}</Link>
             </td>
             <td className="td-writer">{board.writer}</td>
-            <td className="td-date">{date === todayStr ? hours : date}</td>
+            <td className="td-date">{date === todayStr 
+              ? hours : date}</td>
           </tr>
         );
       });
@@ -48,7 +54,8 @@ function FreeList() {
   }, []);
 
   useEffect(() => {
-    if (dataSaves.length > 0 && currPage >= 1 && currPage <= dataSaves.length) {
+    if (dataSaves.length > 0 && currPage >= 1 && 
+        currPage <= dataSaves.length) {
       setListData(dataSaves[currPage - 1]);
     }
   }, [dataSaves, currPage]);

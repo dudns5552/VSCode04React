@@ -1,6 +1,6 @@
 // 자료실 게시판 - 글쓰기 페이지
 import { collection, getDocs, limit, orderBy, query, addDoc } from "firebase/firestore";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { firestore, storage } from "../../../firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -12,6 +12,7 @@ function ArchiveWrite() {
   const [uploadFiles, setUploadFiles] = useState([]); // 실제 파일 객체 저장
   const [filesPreview, setFilesPreview] = useState([]); // 미리보기 이미지 URL 저장
 
+  const fileInputRef = useRef();
   const navigate = useNavigate();
 
   // 📌 로그인된 사용자 ID
@@ -69,8 +70,10 @@ function ArchiveWrite() {
           onSubmit={async (e) => {
             e.preventDefault();
 
-            if (title.trim() === '') { alert('제목을 입력해주세요.'); return; }
-            if (contents.trim() === '') { alert('내용을 입력해주세요.'); return; }
+            if (title.trim() === '') 
+              { alert('제목을 입력해주세요.'); return; }
+            if (contents.trim() === '') 
+              { alert('내용을 입력해주세요.'); return; }
 
             const newIdx = await getNewIdx();
             const writeDate = nowDate();
@@ -155,6 +158,7 @@ function ArchiveWrite() {
             type="file"
             name="myfile"
             multiple
+            ref={fileInputRef}
             onChange={(e) => {
               const newFiles = Array.from(e.target.files); // 새로 선택한 파일들
               
@@ -175,7 +179,8 @@ function ArchiveWrite() {
           {/* // 파일 미리보기 출력 시작 */}
           {filesPreview.map(({ file, preview }, delIdx) => {
             const extension = file.name.split('.').pop().toLowerCase();
-            const isImage = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'].includes(extension);
+            const isImage = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp']
+              .includes(extension);
 
             return (
               <div key={file.name} style={{ marginBottom: 10 }}>
@@ -191,11 +196,14 @@ function ArchiveWrite() {
                 <button className="btn btn-red"
                  onClick={() => {
                     // 삭제 처리
+                    if (fileInputRef.current.value == uploadFiles[delIdx].name) {
+                    fileInputRef.current.value = '';
+                  }
                     const newPreviewArr = filesPreview.filter((_, idx) => idx !== delIdx);
                     const newUploadFilesArr = uploadFiles.filter((_, idx) => idx !== delIdx);
                     setFilesPreview(newPreviewArr);
                     setUploadFiles(newUploadFilesArr);
-                }}>삭제</button>
+                }}>❌</button>
               </div>
             );
           })}

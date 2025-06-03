@@ -18,7 +18,7 @@ function ComList(props) {
   
 
 
-  // ✅ 댓글 수정
+  //  댓글 수정
   const editCom = async () => {
     try {
       if (!selectedComment) {
@@ -37,7 +37,7 @@ function ComList(props) {
     }
   };
 
-  // ✅ 댓글 삭제
+  //  댓글 삭제
   const deleteCom = async (ref) => {
     try {
       await deleteDoc(ref);
@@ -47,7 +47,7 @@ function ComList(props) {
     }
   };
 
-  // ✅ 댓글 불러오기
+  //  댓글 불러오기
   const loadComments = async () => {
     try {
       const q = query(
@@ -60,7 +60,7 @@ function ComList(props) {
       const year = dateObj.getFullYear();
       const month = ("0" + (1 + dateObj.getMonth())).slice(-2);
       const day = ("0" + dateObj.getDate()).slice(-2);
-      const todayStr = `${year}.${month}.${day}`;
+      const todayStr = `${year}-${month}-${day}`;
 
       const comments = querySnapshot.docs.map((doc) => {
         const data = doc.data();
@@ -71,11 +71,11 @@ function ComList(props) {
           cWriter: data.cWriter,
           cContents: data.cContents,
           displayDate: date === todayStr ? hours : date,
-          ref: doc.ref, // ✅ 댓글 문서 참조 추가
+          ref: doc.ref, //  댓글 문서 참조 추가
         };
       });
 
-      // ✅ 페이지 분할 (20개씩)
+      //  페이지 분할 (20개씩)
       const chunked = [];
       for (let i = 0; i < comments.length; i += 20) {
         chunked.push(comments.slice(i, i + 20));
@@ -94,7 +94,7 @@ function ComList(props) {
 
   return (
     <>
-      {/* ✅ 댓글 목록 */}
+      {/*  댓글 목록 */}
       <ul className="list-group mt-3">
         {rows.length === 0 ? (
           <div className="text-muted mt-3">댓글이 없습니다.</div>
@@ -134,7 +134,7 @@ function ComList(props) {
         )}
       </ul>
 
-      {/* ✅ 페이지네이션 */}
+      {/*  페이지네이션 */}
       <footer className="mt-3">
         {rows.map((_, idx) => (
           <button
@@ -151,7 +151,7 @@ function ComList(props) {
         ))}
       </footer>
 
-      {/* ✅ 수정 모달 */}
+      {/*  수정 모달 */}
       {showModal && selectedComment && (
         <div className="modal fade show d-block" tabIndex="-1">
           <div className="modal-dialog">

@@ -6,12 +6,17 @@ import StatesContext from "../../commons/StatesContext";
 
 function Login(props) {
 
+  // 아이디 비밀번호 저장 상태훅
   const [id, setId] = useState('');
   const [pass, setPass] = useState('');
+
+  // 로그인후 홈화면으로 가기위한 내비게이션
   const navigate = useNavigate();
 
+  // 유저의 정보를 저장하기 위한 훅
   const [showData, setShowData] = useState([]);
-
+  
+  // 세션스토리지 설정후 렌더링을 위한 훅
   const { rendering, setRendering } = useContext(StatesContext);
 
   // 데이터 불러오기
@@ -88,7 +93,7 @@ function Login(props) {
         <div className="login-links">
           <a href="#">아이디/비밀번호 찾기</a>
           <span>|</span>
-          <a href="/Signup">회원가입</a>
+          <a href="#/signup">회원가입</a>
         </div>
       </form>
     </div>

@@ -4,8 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { firestore } from "../../../firebaseConfig";
 
 function FreeWrite() {
+
+  // 제목과 내용을 저장하기위한 상태
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
+
+  // 글쓴후 목록으로 가기위한 상태훅
   const navigate = useNavigate();
 
   // 로그인된 사용자 ID 가져오기

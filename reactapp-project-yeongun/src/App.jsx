@@ -20,7 +20,7 @@ function App(props) {
   return (<>
     <StatesProvider>
       {/* Chat 경로가 아니면 TopNavi 보이기 */}
-      {location.pathname !== '/chat' && <TopNavi />}
+      <TopNavi />
       <Routes>
         <Route path='/' element={<Home />} />
         {MemberRoutes()}

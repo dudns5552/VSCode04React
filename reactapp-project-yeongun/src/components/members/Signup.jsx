@@ -113,7 +113,7 @@ function Signup(props) {
 
         await memberWrite(collName, id, pass, name, emailId, sDomain, p1, p2, p3, zipcode, address1, address2);
         setIdChecked(false); // 다음 회원가입 시 중복확인을 위해 상태 초기화
-        setIsLocked(false);  // 잠금 해제 (선택사항)
+        setIsLocked(false);  // 잠금 해제
         alert("회원가입이 완료되었습니다.");
         navigate("/");
       }}>
@@ -133,7 +133,8 @@ function Signup(props) {
                       setIsLocked(false);       // 입력 변경되면 잠금 해제 // 추가됨
                     }}
                     readOnly={isLocked} />
-                  <button type="button" className="signup-inline-button" onClick={idCheck}>중복확인</button>
+                  <button type="button" className="signup-inline-button" 
+                    onClick={idCheck}>중복확인</button>
                 </div>
               </td>
             </tr>
@@ -168,10 +169,11 @@ function Signup(props) {
                     onChange={(e) => setFormData({ ...formData, emailId: e.target.value })} />
                   <span>@</span>
                   <input type="text" name="emailDomain" required value={formData.sDomain}
-                    onChange={(e) => setFormData({ ...formData, sDomain: e.target.value })} readOnly={domainLock} />
+                    onChange={(e) => setFormData({ ...formData, sDomain: e.target.value })}
+                     readOnly={domainLock} />
                   <select className="signup-email-select" onChange={(e) => {
                     setFormData({ ...formData, sDomain: e.target.value });
-                    setDomainLock(!!e.target.value);
+                    setDomainLock(!e.target.value);
                   }}>
                     <option value="">직접입력</option>
                     <option value="naver.com">naver.com</option>

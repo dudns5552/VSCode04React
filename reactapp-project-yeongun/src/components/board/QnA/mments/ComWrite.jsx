@@ -1,11 +1,12 @@
 import { addDoc, collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { firestore } from "../../../../firebaseConfig";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
 
 function ComWrite(props) {
   const navigate = useNavigate();
   const params = useParams();
+
+
 
   // 댓글 인덱스 함수
   const getNewComIdx = async () => {
@@ -70,7 +71,6 @@ function ComWrite(props) {
                 name="cContents"></textarea>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
               <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >작성</button>
             </div>
           </form>

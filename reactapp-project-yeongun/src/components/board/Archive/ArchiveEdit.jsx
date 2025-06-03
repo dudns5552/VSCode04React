@@ -11,8 +11,8 @@ import {
   deleteObject,
   getDownloadURL,
   uploadBytes,
- } from "firebase/storage";
-import { useEffect, useState } from "react";
+} from "firebase/storage";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { firestore, storage } from "../../../firebaseConfig";
 
@@ -26,6 +26,8 @@ function ArchiveEdit() {
   const [renderFlag, setRenderFlag] = useState(false); // ➕ 파일 삭제 후 재렌더링 트리거
   const [snapshot, setSnapshot] = useState(null); // 문서 참조 저장
   // 상태 정의 끝
+
+  const fileInputRef = useRef();
 
   const navigate = useNavigate();
   const { idx } = useParams();
@@ -154,30 +156,63 @@ function ArchiveEdit() {
             type="file"
             name="myfile"
             multiple
+            ref={fileInputRef}
             onChange={(e) => {
               const filesArr = Array.from(e.target.files);
-              setUploadFiles(filesArr);
+              const updatedUploadFiles = [...uploadFiles, ...filesArr];
+              setUploadFiles(updatedUploadFiles);
 
               const previewArr = filesArr.map(file => ({
                 file,
                 preview: URL.createObjectURL(file)
               }));
-              setFilesPreview(previewArr);
+              setFilesPreview(prev => [...prev, ...previewArr]);
             }}
           />
           {/* 업로드 버튼 끝 */}
 
           {/* 파일 미리보기 (새로 올린 파일) 시작 */}
-          {filesPreview.map(({ preview, file }) => (
-            <div key={file.name}>
-              <img
-                src={preview}
-                alt={file.name}
-                style={{ maxWidth: '200px', maxHeight: '150px', border: '1px solid #ccc' }}
-              />
-              <p>{file.name}</p>
+          {filesPreview.map(({ preview, file }, index) => {
+            const extension = file.name.split('.').pop().toLowerCase();
+            const isImage = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'].includes(extension);
+
+            return (
+            <div key={file.name} style={{ marginBottom: 10 }}>
+                {isImage ? (
+                  <img
+                    src={preview}
+                    alt={file.name}
+                    style={{ maxWidth: '200px', maxHeight: '150px', border: '1px solid #ccc' }}
+                  />
+                ) : (
+                  <a href={preview} target="_blank" rel="noopener noreferrer">{file.name}</a>
+                )}
+
+              {/* ➕ 새로 올린 파일 삭제 버튼 */}
+              <button
+                type="button"
+                className="btn btn-red"
+                onClick={ () => {
+                  console.log('fileInputRef', fileInputRef.current.value);
+                  console.log('filespreview', filesPreview[index].name);
+                  // 미리보기와 업로드 파일에서 삭제
+                  const updatedPreviews = [...filesPreview];
+                  const updatedFiles = [...uploadFiles];
+                  updatedPreviews.splice(index, 1);
+                  updatedFiles.splice(index, 1);
+                  setFilesPreview(updatedPreviews);
+                  setUploadFiles(updatedFiles);
+                  if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                  }
+                }}
+              >
+                ❌
+              </button>
             </div>
-          ))}
+
+          )})}
+
           {/* 파일 미리보기 끝 */}
 
           {/* 기존 파일 출력 및 삭제 버튼 시작 */}
@@ -227,7 +262,7 @@ function ArchiveEdit() {
                     }
                   }}
                 >
-                  삭제
+                  ❌
                 </button>
               </div>
             );

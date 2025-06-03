@@ -4,10 +4,13 @@ import { firestore } from '../firebaseConfig';
 import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 
 const Home = () => {
+  
+  // 각 게시판의 최신 게시물을 저장하기 위한 스테이트
   const [freePosts, setFreePosts] = useState([]);
   const [qnaPosts, setQnaPosts] = useState([]);
   const [archivePosts, setArchivePosts] = useState([]);
 
+  // 최신 게시물 가져오기 함수
   const fetchLatestPosts = async (collectionName, setter) => {
     const q = query(
       collection(firestore, collectionName),
@@ -27,9 +30,6 @@ const Home = () => {
 
   return (
     <div className="container">
-      
-      
-
       {/* 제목 */}
       <h2 className="section-title">React 어플리케이션 제작하기</h2>
 
@@ -70,7 +70,8 @@ const Home = () => {
         <div className="archive-list">
           {archivePosts.map(post => (
             <div key={post.idx} className="archive-item">
-              {post.files[0].url && (
+              {/* ✏️ url이 없을 경우에도 에러 안 나도록 옵셔널 체이닝 사용 */}
+              {post.files?.[0]?.url && (
                 <img src={post.files[0].url} alt={post.title} className="archive-img" />
               )}
               <div className="archive-title">

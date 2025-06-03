@@ -13,12 +13,22 @@ import { firestore } from "../../../firebaseConfig";
 import { useEffect, useState } from "react";
 
 function FreeView() {
+
+  // 게시글 데이터 저장
   const [viewData, setViewData] = useState(null);
+
+  // 이전 다음글 인덱스 저장
   const [prevIdx, setPrevIdx] = useState(null);
   const [nextIdx, setNextIdx] = useState(null);
+
+  // 화면이동을 위한 내비게이트
   const navigate = useNavigate();
+
+  // 인덱스 저장
   const { idx } = useParams();
   const viewIdx = Number(idx);
+
+  // 게시글의 글쓴이인지 확인하기
   const [isRight, setIsRight] = useState(false);
 
   useEffect(() => {
