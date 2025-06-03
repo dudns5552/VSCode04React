@@ -1,92 +1,78 @@
 // ChatStart.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatRoomList from './ChatRoomList';
 import { useNavigate } from 'react-router-dom';
 
 function ChatStart() {
-  //  새 채팅방 이름 상태 관리 (입력한 방명)
-  const [newRoomName, setNewRoomName] = useState('');
-
-  //  새 채팅방 입력창 표시 여부 상태 (처음엔 숨김)
-  const [showInput, setShowInput] = useState(false);
-
-  //  로그인 안 했을 때 사용자가 입력하는 대화명 상태
   const [chatName, setChatName] = useState('');
-
-  //  페이지 이동을 위한 react-router-dom 훅
+  const [isNameSet, setIsNameSet] = useState(false);
   const navigate = useNavigate();
 
-  //  현재 사용자 대화명을 반환하는 함수
-  //  로그인 상태면 세션에서 id를 꺼내고, 아니면 chatName 상태값 사용
+  // 대화명 또는 로그인 상태 확인
+  useEffect(() => {
+    const session = sessionStorage.getItem('islogined');
+    if (session) {
+      setIsNameSet(true);
+    } else if (chatName) {
+      setIsNameSet(true);
+    }
+  }, [chatName]);
+
+  // 대화명 가져오기
   const getChatName = () => {
     const session = sessionStorage.getItem('islogined');
     return session ? JSON.parse(session).id : chatName;
   };
 
-  //  [새 채팅] 버튼 클릭 시 입력창 보이도록 상태 변경
-  const handleNewChatClick = () => {
-    setShowInput(true);
+  // 👉 대화명 정하기
+  const handleSetNameClick = () => {
+    const input = prompt('대화명을 입력하세요');
+    if (input && input.trim()) {
+      setChatName(input.trim());
+    }
   };
 
-  //  새 채팅 시작 버튼 클릭 시 실행
-  //  사용자 대화명과 방명이 모두 있으면 채팅 페이지로 이동
-  //  없으면 경고창 띄움
-  const handleStartNewChat = () => {
+  // 👉 새 채팅 시작
+  const handleNewChatClick = () => {
+    const roomName = prompt('채팅방 이름을 입력하세요');
     const user = getChatName();
-    if (!user || !newRoomName) {
-      alert('대화명과 방명을 모두 입력하세요.');
+
+    if (!user) {
+      alert('먼저 대화명을 설정하세요.');
       return;
     }
-    //  쿼리스트링(roomId, userId)을 붙여서 이동
-    navigate(`/chat/talk?roomId=${newRoomName}&userId=${user}`);
+
+    if (!roomName || !roomName.trim()) {
+      alert('방 이름을 입력해야 합니다.');
+      return;
+    }
+
+    navigate(`/chat/talk?roomId=${roomName.trim()}&userId=${user}`);
   };
 
   return (
-    <div className="App">
-      <h2>Firebase - 채팅 시작</h2>
+    <div className="chat-container">
+      <h2 className="chat-title">이슬 talk talk</h2>
 
-      {/* 
-         로그인하지 않은 상태면 대화명 입력란 보여줌 
-         로그인했으면 세션에서 아이디를 바로 사용하기 때문에 안 보임
-      */}
-      {!sessionStorage.getItem('islogined') && (
-        <>
-          대화명: <input
-            type="text"
-            name="userId"
-            value={chatName}
-            onChange={(e) => setChatName(e.target.value)}
-          /><br />
-        </>
+      {/* 로그인되지 않았고 대화명이 없는 경우에만 대화명 정하기 표시 */}
+      {!isNameSet && (
+        <div className="btn-area">
+          <button onClick={handleSetNameClick} className="primary-btn">
+            대화명 정하기
+          </button>
+        </div>
       )}
 
-      {/* 
-         새 채팅 입력창이 보이지 않으면 새 채팅 버튼 표시 
-         누르면 입력창이 보이도록 상태 변경됨 
-      */}
-      {!showInput ? (
-        <button onClick={handleNewChatClick}>[새 채팅]</button>
-      ) : (
-        <>
-          {/* 
-             새 채팅방 이름 입력란과 채팅 시작 버튼 표시
-          */}
-          방명: <input
-            type="text"
-            value={newRoomName}
-            onChange={(e) => setNewRoomName(e.target.value)}
-          /><br />
-          <button onClick={handleStartNewChat}>채팅 시작</button>
-        </>
+      {/* 대화명이 정해지거나 로그인 상태면 새 채팅 표시 */}
+      {isNameSet && (
+        <div className="btn-area">
+          <button onClick={handleNewChatClick} className="primary-btn">
+            + 새 채팅
+          </button>
+        </div>
       )}
 
-      <hr />
-
-      {/* 
-         기존 채팅방 목록을 보여주는 컴포넌트 
-         현재 사용자 대화명(userId)을 prop으로 전달
-      */}
+      <hr className="divider" />
       <ChatRoomList userId={getChatName()} />
     </div>
   );

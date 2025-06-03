@@ -62,24 +62,25 @@ function QnAEdit() {
   };
 
   return (
-    <>
-      <header>
-        <h2>Q&A게시판 - 수정</h2>
+    <div className="free-board-container">
+      <header className="freeview-header">
+        <h2 className="board-title">Q&A게시판</h2>
       </header>
       <nav>
-        <Link to="/qna/list">목록</Link>
+        <Link to="/qna/list" className="nav-link tar">목록</Link>
       </nav>
-      <article>
+      <article className="write-article">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             edit();
           }}
         >
-          <input type="hidden" name="collection" value="freeBoard" />
-          <table id="boardTable">
+          <input type="hidden" name="collection" value="qnaBoard" />
+
+          <table className="write-table">
             <colgroup>
-              <col width="30%" />
+              <col width="20%" />
               <col width="*" />
             </colgroup>
             <tbody>
@@ -91,6 +92,7 @@ function QnAEdit() {
                     name="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    className="input-title"
                   />
                 </td>
               </tr>
@@ -103,15 +105,18 @@ function QnAEdit() {
                     rows="8"
                     value={contents}
                     onChange={(e) => setContents(e.target.value)}
+                    className="input-contents"
                   ></textarea>
                 </td>
               </tr>
             </tbody>
           </table>
-          <input type="submit" value="전송" />
+          <div className="btn-area">
+            <input type="submit" value="수정하기" className="submit-btn" />
+          </div>
         </form>
       </article>
-    </>
+    </div>
   );
 }
 

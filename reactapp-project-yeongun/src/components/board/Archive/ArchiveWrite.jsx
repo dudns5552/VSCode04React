@@ -56,7 +56,7 @@ function ArchiveWrite() {
 
   return (
     <div className="free-board-container">
-      <header header className="freeview-header">
+      <header className="freeview-header">
         <h2 className="board-title">자료게시판</h2>
       </header>
       <nav>
@@ -202,7 +202,7 @@ function ArchiveWrite() {
           {/* // 파일 미리보기 출력 끝 */}
 
           <div className="btn-area">
-            <input type="submit" value="전송" className="submit-btn" />
+            <input type="submit" value="글쓰기" className="submit-btn" />
           </div>
         </form>
         {/* 🔽 글쓰기 폼 끝 */}

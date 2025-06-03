@@ -120,7 +120,7 @@ function QnAWrite() {
           </table>
 
           <div className="btn-area">
-            <input type="submit" value="전송" className="submit-btn" />
+            <input type="submit" value="글쓰기" className="submit-btn" />
           </div>
         </form>
       </article>

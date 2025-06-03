@@ -103,23 +103,23 @@ function ArchiveEdit() {
   // 게시글 수정 함수 끝
 
   return (
-    <>
-      <header>
-        <h2>자료게시판 - 수정</h2>
+    <div className="free-board-container">
+      <header className="freeview-header">
+        <h2 className="board-title">자료게시판 - 수정</h2>
       </header>
       <nav>
-        <Link to="/archive/list">목록</Link>
+        <Link to="/archive/list" className="nav-link tar">목록</Link>
       </nav>
-      <article>
+      <article className="write-article">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             Edit();
           }}
         >
-          <table id="boardTable">
+          <table className="write-table">
             <colgroup>
-              <col width="30%" />
+              <col width="20%" />
               <col width="*" />
             </colgroup>
             <tbody>
@@ -130,6 +130,7 @@ function ArchiveEdit() {
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    className="input-title"
                   />
                 </td>
               </tr>
@@ -141,6 +142,7 @@ function ArchiveEdit() {
                     rows="8"
                     value={contents}
                     onChange={(e) => setContents(e.target.value)}
+                    className="arc-input-contents"
                   ></textarea>
                 </td>
               </tr>
@@ -150,6 +152,7 @@ function ArchiveEdit() {
           {/* 업로드 버튼 시작 */}
           <input
             type="file"
+            name="myfile"
             multiple
             onChange={(e) => {
               const filesArr = Array.from(e.target.files);
@@ -182,7 +185,7 @@ function ArchiveEdit() {
             const extension = file.name.split('.').pop().toLowerCase();
             const isImage = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'].includes(extension);
             return (
-              <div key={file.name}>
+              <div key={file.name} style={{ marginBottom: 10 }}>
                 {isImage ? (
                   <img
                     src={file.url}
@@ -198,7 +201,7 @@ function ArchiveEdit() {
                     {file.name}
                   </a>
                 )}
-                <button
+                <button className="btn btn-red"
                   type="button"
                   onClick={async () => {
                     if (window.confirm('파일을 삭제하시겠습니까?')) {
@@ -231,10 +234,12 @@ function ArchiveEdit() {
           })}
           {/* 기존 파일 출력 및 삭제 버튼 끝 */}
 
-          <input type="submit" value="수정하기" />
+          <div className="btn-area">
+            <input type="submit" value="수정하기" className="submit-btn" />
+          </div>
         </form>
       </article>
-    </>
+    </div>
   );
 }
 

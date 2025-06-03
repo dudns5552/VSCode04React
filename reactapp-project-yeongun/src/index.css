@@ -1029,3 +1029,273 @@ article {
   font-family: inherit;
   box-sizing: border-box;
 }
+
+/* chat-style.css */
+
+.chat-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-height: 629px;
+}
+
+.chat-title {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin: 1rem 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.primary-btn, .secondary-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  
+}
+
+.primary-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.secondary-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.divider {
+  margin: 1.5rem 0;
+  border-top: 1px solid #ddd;
+}
+
+/* ChatRoomList 관련 스타일 */
+
+.room-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+.room-list-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  /* 제목 고정 효과용 */
+  flex-shrink: 0;
+}
+
+.room-scroll-box {
+  flex-grow: 1; /* 남은 공간 전부 차지 */
+  overflow-y: auto;
+  max-height: 400px; /* 필요시 조절 가능 (예: 창 높이에 맞춰서) */
+  padding-right: 0.5em;
+  border-top: 1px solid #ccc;
+}
+
+.room-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.room-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.8em;
+  margin-bottom: 0.6em;
+  background-color: #fafafa;
+}
+
+.room-name {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+}
+
+.last-msg {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 0.5em;
+}
+
+.secondary-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.empty-msg {
+  color: #888;
+  font-style: italic;
+  padding: 1em;
+}
+
+.btn-gray{
+  background-color: #333;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  color: #eee;
+}
+
+.btn-gray:hover{
+  background-color: #555;
+}
+
+
+/* 채팅방 CSS시작 */
+/* ChatMessage.css */
+
+.chat-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  font-family: sans-serif;
+  min-height: 644px;
+}
+
+.chat-message-list {
+  border: 1px solid #ccc;
+  height: 444px;
+  overflow-y: auto;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.chat-message {
+  margin-bottom: 10px;
+}
+
+.my-message {
+  text-align: right;
+}
+
+.other-message {
+  text-align: left;
+}
+
+.chat-bubble {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 16px;
+  max-width: 70%;
+  background-color: #e0e0e0;
+  margin-top: 4px;
+}
+
+.my-message .chat-bubble {
+  background-color: #aee1f9;
+}
+
+.chat-time {
+  font-size: 0.75em;
+  color: #666;
+  margin-top: 2px;
+}
+
+.chat-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.chat-textarea {
+  flex: 1;
+  resize: none;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.send-button {
+  padding: 20px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.send-button:hover {
+  background-color: #45a049;
+}
+
+.chat-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leave-button {
+  padding: 6px 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.leave-button:hover {
+  background-color: #d32f2f;
+}
+
+.file-preview {
+  margin-top: 10px;
+  border: 1px dashed #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.file-preview img {
+  max-width: 100%;
+  max-height: 200px;
+}
+
+.close-preview {
+  margin-top: 5px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+/* 채팅방 CSS 끝  */

@@ -63,9 +63,9 @@ function FreeEdit() {
   };
 
   return (
-    <>
-      <header>
-        <h2>자유게시판 - 수정</h2>
+    <div className="free-board-container">
+      <header className="freeview-header">
+        <h2 className="board-title">자유게시판</h2>
       </header>
 
       <nav>
@@ -113,11 +113,11 @@ function FreeEdit() {
             </tbody>
           </table>
           <div className="btn-area">
-            <input type="submit" value="전송" className="submit-btn" />
+            <input type="submit" value="수정하기" className="submit-btn" />
           </div>
         </form>
       </article>
-    </>
+    </div>
   );
 }
 

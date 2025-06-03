@@ -19,7 +19,7 @@ function TopNavi() {
       <div className="nav-right">
         <NavLink className="nav-item"
           onClick={() => {
-            window.open('#/chat', '', 'width=500,height=700')
+            window.open('#/chat', '', 'width=550,height=777')
           }}
         >
           채팅
